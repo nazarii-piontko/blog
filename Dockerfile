@@ -5,6 +5,7 @@ RUN gem install bundler
 WORKDIR /data
 
 COPY Gemfile ./
+COPY Gemfile.lock ./
 RUN bundle install
 
 USER 1000:1000
