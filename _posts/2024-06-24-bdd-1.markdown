@@ -228,7 +228,7 @@ It's worth mentioning that there is an alternative to Selenium called Playwright
 
 Proposed reference BDD testing architectural approach based on Python/Behave is structured in layers, each with its own responsibilities and interactions.
 
-![Layered architecture of the BDD tests app]({{ site.baseurl }}/assets/2024/06/24/bdd//layers.png)
+![Layered architecture of the BDD tests app]({{ site.baseurl }}/assets/2024/06/24/bdd/layers.png)
 
 #### Top Layer: Test Specifications
 
@@ -255,10 +255,10 @@ Proposed reference BDD testing architectural approach based on Python/Behave is 
 
 #### Bottom Layer: Core Technologies
 
-* Python. The primary programming language used.
-* Behave. The BDD base framework that executes our features and steps.
-* Selenium. Used for web browser automation.
-* Docker. Ensures consistent testing environments.
+* **Python**. The primary programming language used.
+* **Behave**. The BDD base framework that executes our features and steps.
+* **Selenium**. Used for web browser automation.
+* **Docker**. Ensures consistent testing environments.
 
 #### Benefits of Layered Approach
 
