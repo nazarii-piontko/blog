@@ -1,7 +1,6 @@
 ---
 layout:  post
 title:   "BDD: Behind the scenes (Part 1)"
-author:  "Nazarii Piontko"
 excerpt: "Behavior-Driven Development (BDD) is an agile software development process that enhances collaboration between technical and non-technical team members. It focuses on defining application behavior through universally understandable examples, improving communication and shared understanding of project goals. This article explores BDD for web applications using Python, covering key components like Gherkin, Cucumber/Behave, Selenium, and Docker. A practical example demonstrates real-world BDD implementation, based on the author's experience integrating BDD into applications."
 tags:    "bdd python behave selenium"
 date:    "2024-06-24"

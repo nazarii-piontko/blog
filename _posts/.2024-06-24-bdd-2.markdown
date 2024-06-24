@@ -1,7 +1,6 @@
 ---
 layout:  post
 title:   "BDD: Behind the scenes (Part 2)"
-author:  "Nazarii Piontko"
 excerpt: "Behavior-Driven Development: practical guide for web-applications"
 tags:     bdd python behave selenium
 date:    "2024-06-24"
