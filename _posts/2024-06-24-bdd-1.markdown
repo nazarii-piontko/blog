@@ -1,9 +1,9 @@
 ---
 layout:  post
-title:   "BDD: Behind the scenes"
+title:   "BDD: Behind the scenes (Part 1)"
 author:  "Nazarii Piontko"
-excerpt: "Behavior-Driven Development: practical guide for web-applications"
-tags: bdd python behave selenium
+excerpt: "Behavior-Driven Development (BDD) is an agile software development process that enhances collaboration between technical and non-technical team members. It focuses on defining application behavior through universally understandable examples, improving communication and shared understanding of project goals. This article explores BDD for web applications using Python, covering key components like Gherkin, Cucumber/Behave, Selenium, and Docker. A practical example demonstrates real-world BDD implementation, based on the author's experience integrating BDD into applications."
+tags:    "bdd python behave selenium"
 date:    "2024-06-24"
 ---
 
@@ -15,9 +15,7 @@ BDD is an agile software development process that encourages collaboration betwe
 
 While BDD can be applied to various types of software development, this article will be focused on web applications. The complexity of modern web apps makes them ideal candidates for BDD. By clearly defining expected behaviors, teams can more effectively tackle the challenges of web development, from ensuring cross-browser compatibility to managing state across different pages.
 
-In this article, we will dive deep into the world of BDD for web applications using Python. We will explore the key components that make up a BDD environment, including Gherkin for writing acceptance tests, Cucumber/Behave/Python for running acceptance tests, Selenium for web browser automation, Docker for creating consistent testing environments, and finally we will join it all together in layered reference tests architecture. And finally, we will walk through a simple practical example to demonstrate how BDD can be implemented in a real-world scenario. This sample was prepared by me in times when I was heavily involved in this topic helping my QA-team to integrate BDD into our applications.  
-
-Whether you're a developer looking to improve your testing practices, a QA specialist aiming to bridge the gap with your development team, or a project manager interested in fostering better collaboration, this guide will provide you with the knowledge and tools to get started with BDD in your web development projects.
+In this article, we will dive deep into the world of BDD for web applications using Python. We will explore the key components that make up a BDD environment, including Gherkin for writing acceptance tests, Cucumber/Behave/Python for running acceptance tests, Selenium for web browser automation, Docker for creating consistent testing environments, and finally we will join it all together in layered reference tests architecture. And finally, we will walk through a simple practical example to demonstrate how BDD can be implemented in a real-world scenario. This sample was prepared by me in times when I was heavily involved in this topic helping my QA-team to integrate BDD into our applications.
 
 # Gherkin Language
 
@@ -71,7 +69,7 @@ Here is a key components of Gherkin syntax:
       |  20   |  5  |  15  |
   ```
 
-## Good practices for writing Gherkin scenarios
+#### Good practices for writing Gherkin scenarios
 
 * Use declarative rather than imperative style. Focus on what the system does, not how it does it.
 * Keep scenarios independent and atomic. Each scenario should be able to run independently of others.
@@ -126,7 +124,7 @@ Key aspects of step definitions:
   ```
   This allows a single step definition to match variations like *I should see **1** item in **my** cart* and *I should see **3** items in **the** cart*
 
-## Good Practices for Step Definitions
+#### Good Practices for Step Definitions
 
 * Keep step definitions simple and focused on translating Gherkin to code.
 * Use Page Objects (see below) or similar patterns to encapsulate complex interactions with the system under test.
@@ -193,7 +191,7 @@ Hooks are particularly useful for:
 
 Before we deep dive into example, I would like to make a short introduction for two other very important tools for running and testing web applications: Docker and Selenium.
 
-## Docker
+#### Docker
 
 [Docker](https://www.docker.com/) is a platform for developing, shipping, and running applications in containers. In the context of BDD, Docker plays a crucial role in creating consistent and isolated environments for running tests. In case very complex systems or some company standards other tools might be using to run web apps, for example, Kubernetes.
 
@@ -212,7 +210,7 @@ A typical Docker setup for BDD might include containers for:
 
 By using Docker, you can ensure that your BDD tests run consistently across different machines and environments, from a developer's local machine to a continuous integration server.
 
-## Browser automation - Selenium
+#### Browser automation - Selenium
 
 [Selenium](https://www.selenium.dev/) is a powerful tool for web browser automation. In the context of BDD for web applications, Selenium acts as the bridge between your test scenarios and the actual web browser.
 
@@ -228,17 +226,17 @@ It's worth mentioning that there is an alternative to Selenium called Playwright
 
 # Getting Everything Together - A Layered Approach
 
+Proposed reference BDD testing architectural approach based on Python/Behave is structured in layers, each with its own responsibilities and interactions.
+
 ![Layered architecture of the BDD tests app]({{ site.baseurl }}/assets/2024/06/24/bdd//layers.png)
 
-Proposed reference BDD testing architectural approach based on Python/Behave is structured in layers, each with its own responsibilities and interactions. Let's break down these layers from top to bottom:
-
-## Top Layer: Test Specifications
+#### Top Layer: Test Specifications
 
 * **Features**. Written in Gherkin syntax, describing the behavior of the application.
 
 * **Steps**. The step definitions that implement the Gherkin steps in code.
 
-## Second Layer: Page Interactions
+#### Second Layer: Page Interactions
 
 * **Page objects**. Encapsulate the structure and behavior of web pages. The Page Object pattern is a design pattern that creates an object-oriented class to represent a web page or a component of a web page. It's widely used in automated testing to enhance test maintenance and reduce code duplication. The key principles:
   * Page Objects abstract the UI elements of a web page into a single class.
@@ -247,7 +245,7 @@ Proposed reference BDD testing architectural approach based on Python/Behave is 
 
 * **Asserts**. Custom assertion methods for verifying application behavior.
 
-## Third Layer: Test Infrastructure
+#### Third Layer: Test Infrastructure
 
 * **Config**. Manages test configuration settings, e.g. location of Selenium Hub, global tests parameters, etc.
 * **App Controller**. Manages the lifecycle of the application under test. It contains functionality to start and stop the application, as well as functionality to prepare web application for next test, e.g. clear the database.
@@ -255,14 +253,14 @@ Proposed reference BDD testing architectural approach based on Python/Behave is 
 * **Service Locator**. Manages dependencies and provides access to services.
 * **Utils**. Utility functions and custom exceptions.
 
-## Bottom Layer: Core Technologies
+#### Bottom Layer: Core Technologies
 
 * Python. The primary programming language used.
 * Behave. The BDD base framework that executes our features and steps.
 * Selenium. Used for web browser automation.
 * Docker. Ensures consistent testing environments.
 
-## Benefits of Layered Approach
+#### Benefits of Layered Approach
 
 * **Separation of Concerns**. Each layer has a specific role, making the codebase easier to understand and maintain.
 
@@ -274,7 +272,7 @@ Proposed reference BDD testing architectural approach based on Python/Behave is 
 
 * **Scalability**. This structure allows the framework to grow and accommodate more complex testing needs over time.
 
-## Execution
+#### The Flow
 
 * Behave reads the Features and executes the Steps.
 * Steps use Page Objects and Asserts to interact with and verify the application's behavior.
@@ -282,123 +280,13 @@ Proposed reference BDD testing architectural approach based on Python/Behave is 
 * The App Controller manages the application's state using Docker. App Controller is called from Hooks.
 * Config and Service Locator provide necessary settings and dependencies throughout the layers.
 
-# Example
 
-The proposed test project structure was implemented a few year ago and published as a reference on GitHub: (https://github.com/nazarii-piontko/ToDo-BDD)[https://github.com/nazarii-piontko/ToDo-BDD]
+# The End
 
-## Project Structure
+In this first part of our deep dive into Behavior-Driven Development for web applications using Python, we've explored the fundamental concepts and tools that form the backbone of a robust BDD implementation.
 
-```
-├── app
-│   └── docker-compose.yml
-├── asserts
-│   ├── general.py
-│   └── html_element.py
-├── features
-│   └── todo.feature
-├── infrastructure
-│   ├── app_controller.py
-│   ├── artifacts.py
-│   ├── config_keys.py
-│   ├── config_providers.py
-│   ├── config.py
-│   ├── errors.py
-│   ├── page.py
-│   ├── registry.py
-│   ├── session.py
-│   ├── sessions.py
-│   ├── utils.py
-│   └── web_driver_factory.py
-├── pages
-│   ├── home_page.py
-│   └── __init__.py
-├── steps
-│   ├── general.py
-│   └── todo.py
-└── tools
-    ├── docker
-    │   └── entrypoint.sh
-    ├── web-drivers-chrome
-    │   ├── linux
-    │   ├── mac
-    │   └── win.exe
-    └── web-drivers-gecko
-        ├── linux
-        ├── mac
-        └── win.exe
-├── application.gif
-├── behave.ini
-├── config.json
-├── Dockerfile
-├── environment.py
-├── LICENSE.md
-├── README.md
-└── requirements.txt
-```
+By adopting BDD, development teams can bridge the gap between technical and non-technical stakeholders, improve communication, and ensure a shared understanding of project goals and requirements. This approach not only enhances the quality of the final product but also streamlines the development process by catching misunderstandings and errors early.
 
-* `app/`
-  * `docker-compose.yml`: Defines the Docker services for running the application under test.
-* `asserts/`
-  * `general.py`: Contains general-purpose assertion methods.
-  * `html_element.py`: Specific assertions for HTML elements.
-* `features/`
-  * `todo.feature`: Simple Gherkin file describing one Feature of the sample todo application.
-* `infrastructure/`
-  * `app_controller.py`: Manages the lifecycle of the application under test.
-  * `artifacts.py`: Handles test artifacts like screenshots.
-  * `config_keys.py`, `config_providers.py`, `config.py`: Manage configuration settings.
-  * `errors.py`: Defines custom exceptions.
-  * `page.py`: Base class for Page Objects. Contains common functions like `get_elements_by_css` or `create_screenshot`. 
-  * `registry.py`: Implements a service locator or dependency injection container.
-  * `session.py`: `sessions.py`: Manage test sessions. Session contain reference to session's WebDriver instance.
-  * `utils.py`: Utility functions.
-  * `web_driver_factory.py`: Creates and manages WebDriver instances.
-* `pages/`
-  * `home_page.py`: Page Object for the home page.
-* `steps/`
-  * `general.py`: General step definitions.
-  * `todo.py`: Step definitions specific to todo functionality.
-* `tools/`
-  * `docker/entrypoint.sh`: Entry point script for Docker containers.
-  * `web-drivers-chrome/` and `web-drivers-gecko/`: Contains WebDriver executables for different platforms.
-* `behave.ini`: Configuration for the Behave framework.
-* `config.json`: JSON configuration file.
-* `Dockerfile`: Defines the Docker image for running tests.
-* `environment.py`: Sets up the test environment for Behave.
-* `requirements.txt`: Lists Python dependencies.
+The proposed layered architecture provides a solid foundation for implementing BDD in complex web applications. It separates concerns, promotes code reuse, and allows for flexibility as your testing needs evolve.
 
-This structure reflects a well-organized BDD test project:
-
-* Each directory has a specific purpose.
-* Separate directories for pages, steps, and infrastructure.
-* Features directory for Gherkin scenarios.
-* Custom assertions to make tests more readable and maintainable.
-* WebDriver executables for different operating systems.
-* Docker integration for consistent test environments.
-* Infrastructure layer for Handling complex setup and management tasks.
-
-# Demo
-
-![Demo](https://github.com/nazarii-piontko/ToDo-BDD/raw/master/application.gif)
-
-# Last Thoughts
-
-BDD, when implemented effectively, can significantly improve communication between technical and non-technical team members, ensure that development efforts are aligned with business goals, and provide a robust suite of automated tests that validate the application's behavior.
-
-Even more:
-
-* Integrate your BDD tests into your CI/CD pipeline. This ensures that your scenarios are run automatically with every code change, providing quick feedback on whether new changes have broken existing functionality.
-
-* For larger test suites, consider implementing parallel test execution to reduce overall test run time.
-
-* Extend your BDD approach to cover API testing. Tools like Behave can be used with libraries like requests to test RESTful APIs.
-
-* Adapt your BDD setup for mobile app testing using tools like Appium alongside Behave.
-
-* While BDD is primarily for functional testing, you can incorporate some performance expectations into your scenarios, such as response time assertions.
-
-
----
-Remember, BDD is not just about tools and techniques, but about improving communication and collaboration within your team. As you implement BDD, continuously seek feedback from all stakeholders and refine your process to best suit your team's needs.
-
-By embracing BDD, you're not just creating tests, but building a shared understanding of your application's behavior that will guide your development efforts and ensure you're building the right thing, in the right way.
+In Part 2 of this article, we'll put these concepts into practice with a concrete example. We'll walk through the process of implementing a BDD test suite for a simple web application
