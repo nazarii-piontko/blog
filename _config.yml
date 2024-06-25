@@ -41,6 +41,11 @@ defaults:
       read_time: true
       share: true
 
+analytics:
+  provider: "google-gtag"
+  google:
+    tracking_id: "GTM-T286SJGR"
+
 exclude:
   - Dockerfile
   - jekyll-image-build.sh

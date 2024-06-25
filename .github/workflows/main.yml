@@ -22,7 +22,7 @@ jobs:
       run: |
         gem install bundler
         bundle install
-        bundle exec jekyll build
+        JEKYLL_ENV=production bundle exec jekyll build
 
     - name: Upload to S3
       uses: jakejarvis/s3-sync-action@master
