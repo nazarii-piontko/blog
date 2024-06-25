@@ -1,9 +1,13 @@
 ---
-layout:  post
-title:   "BDD: Behind the scenes (Part 1)"
-excerpt: "Behavior-Driven Development (BDD) is an agile software development process that enhances collaboration between technical and non-technical team members. It focuses on defining application behavior through universally understandable examples, improving communication and shared understanding of project goals. This article explores BDD for web applications using Python, covering key components like Gherkin, Cucumber/Behave, Selenium, and Docker. A practical example demonstrates real-world BDD implementation, based on the author's experience integrating BDD into applications."
-tags:    "bdd python behave selenium"
-date:    "2024-06-24"
+layout:    "single"
+classes:   "wide"
+title:     "BDD: Behind the scenes (Part 1)"
+excerpt:   "Behavior-Driven Development (BDD) is an agile software development process that enhances collaboration between technical and non-technical team members. It focuses on defining application behavior through universally understandable examples, improving communication and shared understanding of project goals. This article explores BDD for web applications using Python, covering key components like Gherkin, Cucumber/Behave, Selenium, and Docker."
+tags:      "bdd python behave selenium"
+date:      "2024-06-24"
+toc:       true
+toc_label: "Table of Contents"
+toc_icon:  "cog"
 ---
 
 # Introduction
@@ -14,7 +18,7 @@ BDD is an agile software development process that encourages collaboration betwe
 
 While BDD can be applied to various types of software development, this article will be focused on web applications. The complexity of modern web apps makes them ideal candidates for BDD. By clearly defining expected behaviors, teams can more effectively tackle the challenges of web development, from ensuring cross-browser compatibility to managing state across different pages.
 
-In this article, we will dive deep into the world of BDD for web applications using Python. We will explore the key components that make up a BDD environment, including Gherkin for writing acceptance tests, Cucumber/Behave/Python for running acceptance tests, Selenium for web browser automation, Docker for creating consistent testing environments, and finally we will join it all together in layered reference tests architecture. And finally, we will walk through a simple practical example to demonstrate how BDD can be implemented in a real-world scenario. This sample was prepared by me in times when I was heavily involved in this topic helping my QA-team to integrate BDD into our applications.
+In this article, we will dive deep into the world of BDD for web applications using Python. We will explore the key components that make up a BDD environment, including Gherkin for writing acceptance tests, Cucumber/Behave/Python for running acceptance tests, Selenium for web browser automation, Docker for creating consistent testing environments, and finally we will join it all together in layered reference tests architecture. And finally, in part 2, we will walk through a simple practical example to demonstrate how BDD can be implemented in a real-world scenario. This sample was prepared by me in times when I was heavily involved in this topic helping my QA-team to integrate BDD into our applications.
 
 # Gherkin Language
 
@@ -44,7 +48,7 @@ Feature: Google Searching.
 Here is a key components of Gherkin syntax:
 
 * `Feature`. A Feature is the highest level of organization in a Gherkin file. It describes a specific feature of the application and usually contains multiple scenarios.
-* `Scenario. A Scenario describes a specific behavior or use case of the feature. Each scenario consists of one or more steps.
+* `Scenario`. A Scenario describes a specific behavior or use case of the feature. Each scenario consists of one or more steps.
 * `Given`, `When`, `Then`, `And`, `But`. These keywords are used to define the steps in a scenario:
   * `Given`. Sets up the initial context for the scenario.
   * `When`. Describes an action.
@@ -68,7 +72,7 @@ Here is a key components of Gherkin syntax:
       |  20   |  5  |  15  |
   ```
 
-#### Good practices for writing Gherkin scenarios
+## Good practices for writing Gherkin scenarios
 
 * Use declarative rather than imperative style. Focus on what the system does, not how it does it.
 * Keep scenarios independent and atomic. Each scenario should be able to run independently of others.
@@ -86,7 +90,7 @@ Key features of cucumber:
 * *Multi-language support*. Cucumber supports many programming languages, allowing you to write step definitions in the language of your choice.
 * *Living documentation*. As the tests are always up-to-date with the current system behavior, they serve as living documentation of the system.
 
-# Bindings - From Natural Language to Code
+# Bindings: From Natural Language to Code
 
 While Gherkin provides a human-readable format for describing application behavior, its true power lies in its ability to connect these descriptions directly to executable code.
 
@@ -123,7 +127,7 @@ Key aspects of step definitions:
   ```
   This allows a single step definition to match variations like *I should see **1** item in **my** cart* and *I should see **3** items in **the** cart*
 
-#### Good Practices for Step Definitions
+## Good Practices for Step Definitions
 
 * Keep step definitions simple and focused on translating Gherkin to code.
 * Use Page Objects (see below) or similar patterns to encapsulate complex interactions with the system under test.
@@ -132,7 +136,7 @@ Key aspects of step definitions:
 
 By effectively binding Gherkin steps to code, we create a powerful link between human-readable specifications and executable tests. This connection is at the heart of Behavior-Driven Development, enabling clear communication between stakeholders while also providing automated validation of system behavior.
 
-# Environmental Control - Hooks
+# Environmental Control: Hooks
 
 In BDD frameworks, hooks provide a powerful mechanism for controlling the test environment and execution flow. These hooks allow you to run code at various points in the testing process, such as before or after certain events. In Behave, these hooks are defined in the `environment.py` file.
 
@@ -186,13 +190,13 @@ Hooks are particularly useful for:
 * Managing test data
 * Handling authentication or other session-based setup
 
-# Additional building blocks
+# Other building blocks
 
-Before we deep dive into example, I would like to make a short introduction for two other very important tools for running and testing web applications: Docker and Selenium.
+Before we deep dive into the whole picture, I would like to make a short introduction for two other very important tools for running and testing web applications: Docker and Selenium.
 
-#### Docker
+## Docker
 
-[Docker](https://www.docker.com/) is a platform for developing, shipping, and running applications in containers. In the context of BDD, Docker plays a crucial role in creating consistent and isolated environments for running tests. In case very complex systems or some company standards other tools might be using to run web apps, for example, Kubernetes.
+[Docker](https://www.docker.com/) is a platform for developing, shipping, and running applications in containers. In the context of BDD, Docker plays a crucial role in creating consistent and isolated environments for running tests. In case very complex systems or some company standards other tools might be using to run web apps, for example, Kubernetes, AWS ECS, etc.
 
 Benefits of using Docker in BDD:
 
@@ -205,11 +209,11 @@ A typical Docker setup for BDD might include containers for:
 * The application under test, whether it is one deployment unit or more (e.g. backend and frontend). 
 * The database is required.
 * The Selenium WebDriver or other browser automation tool in case of end-to-end in browser tests.
-* The test runner (e.g., Cucumber)
+* The test runner (e.g., Behave)
 
 By using Docker, you can ensure that your BDD tests run consistently across different machines and environments, from a developer's local machine to a continuous integration server.
 
-#### Browser automation - Selenium
+## Browser automation: Selenium
 
 [Selenium](https://www.selenium.dev/) is a powerful tool for web browser automation. In the context of BDD for web applications, Selenium acts as the bridge between your test scenarios and the actual web browser.
 
@@ -221,21 +225,21 @@ The Selenium WebDriver (server) interacts directly with the browser.
 Client libraries in various programming languages communicate with the WebDriver over a network protocol.
 This setup allows you to write tests in your preferred programming language while Selenium handles the complexities of browser interaction.
 
-It's worth mentioning that there is an alternative to Selenium called Playwright, which can also be used for web automation testing.
+It's worth mentioning that there is an alternative to Selenium called Playwright, which can also be used for browser automation.
 
-# Getting Everything Together - A Layered Approach
+# Getting Everything Together: Layered Approach
 
 Proposed reference BDD testing architectural approach based on Python/Behave is structured in layers, each with its own responsibilities and interactions.
 
 ![Layered architecture of the BDD tests app]({{ site.baseurl }}/assets/2024/06/24/bdd/layers.png)
 
-#### Top Layer: Test Specifications
+## Top Layer: Test Specifications
 
 * **Features**. Written in Gherkin syntax, describing the behavior of the application.
 
 * **Steps**. The step definitions that implement the Gherkin steps in code.
 
-#### Second Layer: Page Interactions
+## Second Layer: Page Interactions
 
 * **Page objects**. Encapsulate the structure and behavior of web pages. The Page Object pattern is a design pattern that creates an object-oriented class to represent a web page or a component of a web page. It's widely used in automated testing to enhance test maintenance and reduce code duplication. The key principles:
   * Page Objects abstract the UI elements of a web page into a single class.
@@ -244,7 +248,7 @@ Proposed reference BDD testing architectural approach based on Python/Behave is 
 
 * **Asserts**. Custom assertion methods for verifying application behavior.
 
-#### Third Layer: Test Infrastructure
+## Third Layer: Test Infrastructure
 
 * **Config**. Manages test configuration settings, e.g. location of Selenium Hub, global tests parameters, etc.
 * **App Controller**. Manages the lifecycle of the application under test. It contains functionality to start and stop the application, as well as functionality to prepare web application for next test, e.g. clear the database.
@@ -252,14 +256,14 @@ Proposed reference BDD testing architectural approach based on Python/Behave is 
 * **Service Locator**. Manages dependencies and provides access to services.
 * **Utils**. Utility functions and custom exceptions.
 
-#### Bottom Layer: Core Technologies
+## Bottom Layer: Core Technologies
 
 * **Python**. The primary programming language used.
 * **Behave**. The BDD base framework that executes our features and steps.
 * **Selenium**. Used for web browser automation.
 * **Docker**. Ensures consistent testing environments.
 
-#### Benefits of Layered Approach
+## Benefits of Layered Approach
 
 * **Separation of Concerns**. Each layer has a specific role, making the codebase easier to understand and maintain.
 
@@ -271,7 +275,7 @@ Proposed reference BDD testing architectural approach based on Python/Behave is 
 
 * **Scalability**. This structure allows the framework to grow and accommodate more complex testing needs over time.
 
-#### The Flow
+## The Flow
 
 * Behave reads the Features and executes the Steps.
 * Steps use Page Objects and Asserts to interact with and verify the application's behavior.

@@ -1,14 +1,43 @@
-title: "NP > It Works on My Machine"
+title: "NP: It Works on My Machine"
 description: >-
   Hi there! I'm Nazarii Piontko, a software engineer who loves to solve problems with code.
   On this blog, I share my thoughts and experiences about making software.
 
-baseurl: ""
-url: ""
-author: ""
+copyright: "Nazarii Piontko"
+
+author:
+  name: "Nazarii Piontko"
+  # avatar: "/assets/images/bio-photo.jpg"
+  bio: >-
+    Hi there! I'm Nazarii Piontko, a software engineer who loves to solve problems with code.
+    On this blog, I share my thoughts and experiences about making software.
+  location: "Poland"
+  links:
+    - label: "GitHub"
+      icon: "fab fa-fw fa-github"
+      url: "https://github.com/nazarii-piontko"
 
 github_username:  nazarii-piontko
 
-theme: minima
+locale: "en-US"
+# baseurl: ""
+# url: ""
 
-show_excerpts: true
+theme: minimal-mistakes-jekyll
+minimal_mistakes_skin: "contrast" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise
+# theme: minima
+
+# show_excerpts: true
+
+defaults:
+  # _posts
+  - scope:
+      path: ""
+      type: posts
+    values:
+      show_date: true
+
+exclude:
+  - Dockerfile
+  - jekyll-image-build.sh
+  - jekyll.sh
