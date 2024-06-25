@@ -1,8 +1,10 @@
-title: "NP: It Works on My Machine"
+title: "Leaky Heap"
+title_separator: "|"
 description: >-
   Hi there! I'm Nazarii Piontko, a software engineer who loves to solve problems with code.
   On this blog, I share my thoughts and experiences about making software.
 
+name: "Nazarii Piontko"
 copyright: "Nazarii Piontko"
 
 author:
@@ -36,6 +38,8 @@ defaults:
       type: posts
     values:
       show_date: true
+      read_time: true
+      share: true
 
 exclude:
   - Dockerfile

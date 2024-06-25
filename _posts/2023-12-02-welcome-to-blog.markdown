@@ -1,5 +1,6 @@
 ---
 layout:  "single"
+classes: "wide"
 title:   "Welcome to My Blog"
 excerpt: "Welcome to the first post on my blog. Stay tuned for more content!"
 tags:    "intro"
