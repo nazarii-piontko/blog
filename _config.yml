@@ -22,13 +22,13 @@ author:
       icon: "fab fa-fw fa-linkedin"
       url: "https://www.linkedin.com/in/piontko/"
 
-github_username:  nazarii-piontko
+github_username: nazarii-piontko
 
 locale: "en-US"
 url: "https://npiontko.pro"
 
 theme: minimal-mistakes-jekyll
-minimal_mistakes_skin: "contrast" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise
+minimal_mistakes_skin: "dark" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise
 # theme: minima
 
 # show_excerpts: true

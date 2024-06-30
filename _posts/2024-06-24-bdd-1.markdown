@@ -219,7 +219,7 @@ By using Docker, you can ensure that your BDD tests run consistently across diff
 
 Selenium works on a client-server architecture.
 
-![Selenium]({{ site.baseurl }}/assets/posts/bdd/selenium.png)
+![Selenium]({{ site.baseurl }}/assets/posts/bdd/selenium.svg)
 
 The Selenium WebDriver (server) interacts directly with the browser.
 Client libraries in various programming languages communicate with the WebDriver over a network protocol.
@@ -231,7 +231,7 @@ It's worth mentioning that there is an alternative to Selenium called Playwright
 
 Proposed reference BDD testing architectural approach based on Python/Behave is structured in layers, each with its own responsibilities and interactions.
 
-![Layered architecture of the BDD tests app]({{ site.baseurl }}/assets/posts/bdd/layers.png)
+![Layered architecture of the BDD tests app]({{ site.baseurl }}/assets/posts/bdd/layers.svg)
 
 ## Top Layer: Test Specifications
 
