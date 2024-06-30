@@ -38,7 +38,7 @@ defaults:
     values:
       show_date: true
       read_time: true
-      share: true
+      share: false
 
 analytics:
   provider: "google-gtag"
