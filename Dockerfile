@@ -2,7 +2,7 @@ FROM ruby:3.3-bullseye
 
 RUN gem install bundler
 
-WORKDIR /data
+WORKDIR /blog
 
 COPY Gemfile ./
 
