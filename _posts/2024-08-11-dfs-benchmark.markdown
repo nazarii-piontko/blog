@@ -220,11 +220,11 @@ g++ benchmark.cpp -std=c++11 -O3 -fno-optimize-sibling-calls -lbenchmark -lpthre
 
 To run the program the following command has been used:
 
-```bach
+```bash
 sudo benchmark --benchmark_perf_counters=CYCLES,INSTRUCTIONS,BRANCHES,BRANCH-MISSES,PAGE-FAULTS
 ```
 
-With `benchmark_perf_counters` flag CPU counters are specified.
+`benchmark_perf_counters` flag set to show CPU counters for cycles, instructions, branches information and page-faults.
 
 # Results
 
