@@ -1,8 +1,8 @@
 ---
 layout:    "single"
 classes:   "wide"
-title:     "The Surprising Speed of Recursive DFS"
-excerpt:   "Dive into an exploration of Depth-First Search performance across various binary tree structures. This article challenges common assumptions about recursion and iteration, revealing surprising insights into how tree characteristics and CPU optimizations influence algorithm efficiency."
+title:     "Recursive vs. Iterative DFS: A Performance Surprise"
+excerpt:   "Dive into an exploration of Depth-First Search performance across various binary tree structures. This article challenges common assumptions about recursion and iteration, revealing surprising insights into how tree characteristics and CPU optimizations influence implementation performance."
 tags:      "optimization c++ dfs"
 date:      "2024-08-11"
 toc:       false
