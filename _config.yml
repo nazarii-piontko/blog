@@ -25,7 +25,7 @@ author:
 github_username: nazarii-piontko
 
 locale: "en-US"
-url: "https://www.npiontko.pro"
+# url: "https://www.npiontko.pro"
 baseurl: "https://www.npiontko.pro"
 
 theme: minimal-mistakes-jekyll
