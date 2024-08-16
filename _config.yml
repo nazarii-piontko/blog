@@ -52,3 +52,7 @@ exclude:
   - Dockerfile
   - jekyll-image-build.sh
   - jekyll.sh
+
+plugins:
+  - jekyll-feed
+  - jekyll-minifier
