@@ -45,11 +45,17 @@ defaults:
       show_date: true
       read_time: true
       share: false
+      comments: true
 
 analytics:
   provider: "google-gtag"
   google:
     tracking_id: "GTM-T286SJGR"
+
+comments:
+  provider: disqus
+  disqus:
+    shortname: np-blog-1
 
 exclude:
   - Dockerfile
