@@ -2,7 +2,7 @@
 layout:    "single"
 classes:   "wide"
 title:     "BDD: Behind the scenes (Part 2)"
-excerpt:   "In Part 2 of our Behavior-Driven Development (BDD) series, we dive into a practical example using a simple ToDo application. We explore the implementation of BDD tests using Python, Behave, and Selenium, demonstrating how to structure a BDD project, write Gherkin scenarios, create step definitions, and implement Page Objects. The article covers key components like hooks, service registry, application controller, and WebDriver factory, providing insights into best practices for BDD implementation in web application testing."
+excerpt:   "In Part 2 of BDD series, we dive into a practical example using a simple ToDo application. We explore the implementation of BDD tests using Python, Behave, and Selenium, demonstrating how to structure a BDD project, write Gherkin scenarios, create step definitions, and implement Page Objects. The article covers key components like hooks, service registry, application controller, and WebDriver factory, providing insights into best practices for BDD implementation in web application testing."
 tags:      "bdd python behave selenium"
 date:      "2024-06-30"
 toc:       true

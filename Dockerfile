@@ -10,4 +10,6 @@ RUN bundle install
 
 ENV JEKYLL_ENV=production
 
+USER 1000:1000
+
 ENTRYPOINT ["bundle", "exec", "jekyll"]
