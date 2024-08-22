@@ -6,6 +6,8 @@ window.cookieconsent.initialise({
   },
   "type": "opt-in",
   "position": "top-right",
+  "revokable": false,
+  "animateRevokable": true,
   "content": {
     "message": "This website uses cookies to analyze site traffic and improve your browsing experience."
   },
