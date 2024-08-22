@@ -1,15 +1,13 @@
 window.cookieconsent.initialise({
   "palette": {
     "popup": {
-    "background": "#000"
-    },
-    "button": {
-    "background": "#f1d600"
+      "background": "#0f1115"
     }
   },
   "type": "opt-in",
+  "position": "top-right",
   "content": {
-    "message": "We use cookies to analyze site traffic and optimize your browsing experience."
+    "message": "This website uses cookies to analyze site traffic and improve your browsing experience."
   },
   onInitialise: function (status) {
     var type = this.options.type;
