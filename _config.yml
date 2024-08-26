@@ -47,6 +47,18 @@ defaults:
       share: false
       comments: true
 
+footer:
+  links:
+    - label: "GitHub"
+      icon: "fab fa-fw fa-github"
+      url: "https://github.com/nazarii-piontko"
+    - label: "LinkedIn"
+      icon: "fab fa-fw fa-linkedin"
+      url: "https://www.linkedin.com/in/piontko"
+    - label: "Medium"
+      icon: "fab fa-fw fa-medium"
+      url: "https://medium.com/@npiontko"
+
 analytics:
   provider: "google-gtag"
   google:

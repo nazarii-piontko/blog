@@ -7,9 +7,11 @@ window.cookieconsent.initialise({
   "type": "opt-in",
   "position": "top-right",
   "revokable": false,
+  "container": window.document.getElementById("page__footer-cookie-policy"),
   "animateRevokable": true,
   "content": {
-    "message": "This website uses cookies to analyze site traffic and improve your browsing experience."
+    "message": "This website uses cookies to analyze site traffic and improve your browsing experience.",
+    "href": "/privacy-policy"
   },
   onInitialise: function (status) {
     var type = this.options.type;
