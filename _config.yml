@@ -84,4 +84,4 @@ jekyll-minifier:
 
 after_footer_scripts:
   - https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js
-  - /assets/js/cookie-consent.js
+  - /assets/js/cookie-consent.js?version=1724706109
