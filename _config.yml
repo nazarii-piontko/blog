@@ -82,6 +82,8 @@ plugins:
   - jekyll-minifier
 
 jekyll-minifier:
+  exclude:
+    - js/smooth-scroll.js
   uglifier_args:
     harmony: true
 
