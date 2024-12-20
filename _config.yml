@@ -83,7 +83,7 @@ plugins:
 
 jekyll-minifier:
   uglifier_args:
-    harmony: false
+    harmony: true
 
 after_footer_scripts:
   - https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js
