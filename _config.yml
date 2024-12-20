@@ -79,13 +79,11 @@ exclude:
 
 plugins:
   - jekyll-feed
-  - jekyll-minifier
+  # - jekyll-minifier
 
-jekyll-minifier:
-  exclude:
-    - js/smooth-scroll.js
-  uglifier_args:
-    harmony: true
+# jekyll-minifier:
+  # uglifier_args:
+    # harmony: true
 
 after_footer_scripts:
   - https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js
