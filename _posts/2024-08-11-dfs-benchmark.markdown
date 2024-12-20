@@ -6,6 +6,8 @@ excerpt:   "Exploration of DFS implementation performance across various binary 
 tags:      "optimization c++ dfs"
 date:      "2024-08-11"
 toc:       false
+header:
+ og_image: /assets/posts/dfs/dfs-benchmark.png
 ---
 
 # Introduction
