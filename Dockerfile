@@ -1,4 +1,6 @@
-FROM ruby:3.3-bullseye
+FROM ruby:3.3.0-bullseye
+
+ENV JEKYLL_ENV=production
 
 RUN apt-get update && apt-get install -y nodejs
 RUN gem install bundler
@@ -7,8 +9,6 @@ WORKDIR /blog
 
 COPY Gemfile ./
 RUN bundle install
-
-ENV JEKYLL_ENV=production
 
 USER 1000:1000
 
