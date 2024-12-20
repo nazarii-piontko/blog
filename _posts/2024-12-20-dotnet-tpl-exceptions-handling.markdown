@@ -2,7 +2,7 @@
 layout:    "single"
 classes:   "wide"
 title:     "C# async Exception Handling: Will This Crash Your Process?"
-excerpt:   "C# async exception handling exhibits different behaviors based on method signatures. Article describes how "async void" and "async Task" handle exceptions when a method throws an exception."
+excerpt:   "C# async exception handling exhibits different behaviors based on method signatures. Article describes how 'async void' and 'async Task' handle exceptions when a method throws an exception."
 tags:      "dotnet csharp async exceptions"
 date:      "2024-12-20"
 toc:       false
