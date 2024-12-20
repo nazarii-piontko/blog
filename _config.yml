@@ -29,6 +29,8 @@ author:
       url: "https://medium.com/@npiontko"
 
 github_username: nazarii-piontko
+twitter:
+  username: '@elheap42'
 
 locale: "en-US"
 url: "https://www.npiontko.pro"
@@ -45,6 +47,7 @@ defaults:
       path: ""
       type: posts
     values:
+      permalink: /:categories/:year/:month/:day/:title
       show_date: true
       read_time: true
       share: false
