@@ -35,6 +35,8 @@ twitter:
 locale: "en-US"
 url: "https://www.npiontko.pro"
 
+# logo: favicon.png
+
 theme: minimal-mistakes-jekyll
 minimal_mistakes_skin: "dark" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise
 # theme: minima
@@ -82,14 +84,15 @@ exclude:
 
 plugins:
   - jekyll-minifier
+  - jekyll-paginate
+  - jekyll-sitemap
+  - jekyll-gist
   - jekyll-feed
+  - jekyll-include-cache
 
 jekyll-minifier:
   uglifier_args:
     harmony: true
-
-sass:
-  style: compressed
 
 after_footer_scripts:
   - https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js
