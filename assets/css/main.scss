@@ -10,22 +10,7 @@ $global-transition: none;
 
 @import "minimal-mistakes/skins/{{ site.minimal_mistakes_skin | default: 'default' }}"; // skin
 @import "minimal-mistakes"; // main partials
-@import url("https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css"); // cookieconsent
 
 .wide .page {
   width: 100%;
-}
-
-#page__footer-cookie-policy {
-  display: inline;
-}
-
-.cc-revoke {
-  display: inline !important;
-  position: unset !important;
-  padding: unset !important;
-  margin: unset !important;
-  background: transparent !important;
-  font-family: $global-font-family;
-  font-size: 1em;
 }

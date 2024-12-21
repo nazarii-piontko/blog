@@ -5,37 +5,20 @@
 <link rel="apple-touch-icon" sizes="180x180" href="{{ site.baseurl }}/apple-touch-icon.png">
 
 <script>
-  // Define dataLayer and the gtag function.
-  window.dataLayer = window.dataLayer || [];
-  function gtag() {
-    dataLayer.push(arguments);
+  'use strict'
+
+  function handleZarazConsentAPIReady() {
+    const consentCookie = document.cookie.split('; ').find(c => c.startsWith('zaraz-consent='));
+    if (!consentCookie) {
+      zaraz.consent.modal = true
+      zaraz.consent.setAllCheckboxes(true)
+    }
   }
-  // Set default consent to 'denied' as a placeholder
-  // Determine actual values based on your own requirements
-  gtag('consent', 'default', {
-    'ad_storage': 'denied',
-    'ad_user_data': 'denied',
-    'ad_personalization': 'denied',
-    'analytics_storage': 'denied'
-  });
-  // Function for consent cookies
-  function setCookiesHasConsent() {
-    gtag('consent', 'update', {
-      'ad_storage': 'granted',
-      'ad_user_data': 'granted',
-      'ad_personalization': 'granted',
-      'analytics_storage': 'granted'
-    });
-  }
-  // Function for not consent cookies
-  function setCookiesHasNotConsent() {
-    gtag('consent', 'update', {
-      'ad_storage': 'denied',
-      'ad_user_data': 'denied',
-      'ad_personalization': 'denied',
-      'analytics_storage': 'denied'
-    });
-  }
+
+  if (window.zaraz && window.zaraz.consent && window.zaraz.consent.APIReady)
+    handleZarazConsentAPIReady()
+  else
+    document.addEventListener("zarazConsentAPIReady", handleZarazConsentAPIReady)
 </script>
 
 <!-- end custom head snippets -->

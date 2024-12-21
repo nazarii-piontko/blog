@@ -67,11 +67,6 @@ footer:
       icon: "fab fa-fw fa-medium"
       url: "https://medium.com/@npiontko"
 
-analytics:
-  provider: "google-gtag"
-  google:
-    tracking_id: "GTM-T286SJGR"
-
 comments:
   provider: disqus
   disqus:
@@ -93,7 +88,3 @@ plugins:
 jekyll-minifier:
   uglifier_args:
     harmony: true
-
-after_footer_scripts:
-  - https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js
-  - /assets/js/cookie-consent.js?version=1724706109
