@@ -44,7 +44,7 @@ static async Task TaskFuncAsync()
 static void Log(string message) => Console.WriteLine(message);
 ```
 
-I've set up three methods that all throw exceptions: a plain old void method, an async void method, and an async Task method. Then I call them (one by one) in *five* different ways - some wrapped in Task.Run, others called directly. The 5-second delay at the end gives us time to see which ones crash our process versus just failing gracefully.
+We've set up three methods that all throw exceptions: a plain old void method, an async void method, and an async Task method. Then we call them (one by one) in *five* different ways - some wrapped in `Task.Run`, others called directly. The 5-second delay at the end gives us time to see which ones crash our process versus just failing gracefully.
 
 **Results**. Let's look at each case:
 * `Task.Run(VoidFunc)` does **not crash** the process.
