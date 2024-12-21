@@ -6,15 +6,12 @@ gem "minima"
 gem "minimal-mistakes-jekyll"
 
 group :jekyll_plugins do
+  gem "jekyll-minifier"
   gem "jekyll-feed"
-  # gem "jekyll-minifier"
 end
 
-platforms :mingw, :x64_mingw, :mswin, :jruby do
-  gem "tzinfo", ">= 1", "< 3"
+platforms :mingw, :x64_mingw, :mswin do
+  gem "tzinfo"  
   gem "tzinfo-data"
+  gem "wdm"
 end
-
-gem "wdm", "~> 0.1.1", :platforms => [:mingw, :x64_mingw, :mswin]
-
-gem "http_parser.rb", "~> 0.6.0", :platforms => [:jruby]

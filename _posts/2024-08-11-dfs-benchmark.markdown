@@ -7,7 +7,7 @@ tags:      "optimization c++ dfs"
 date:      "2024-08-11"
 toc:       false
 header:
- og_image: /assets/posts/dfs/dfs-benchmark.png
+ teaser: /assets/posts/dfs/dfs-benchmark.png
 ---
 
 # Introduction
