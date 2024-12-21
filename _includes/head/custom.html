@@ -15,6 +15,11 @@
     }
   }
 
+  function showZarazConsent() {
+    zaraz.consent.modal = true
+    zaraz.consent.setAllCheckboxes(zaraz.consent.getAll())
+  }
+
   if (window.zaraz && window.zaraz.consent && window.zaraz.consent.APIReady)
     handleZarazConsentAPIReady()
   else
