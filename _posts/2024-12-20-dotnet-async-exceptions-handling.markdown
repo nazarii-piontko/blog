@@ -47,11 +47,11 @@ static void Log(string message) => Console.WriteLine(message);
 I've set up three methods that all throw exceptions: a plain old void method, an async void method, and an async Task method. Then I call them (one by one) in *five* different ways - some wrapped in Task.Run, others called directly. The 5-second delay at the end gives us time to see which ones crash our process versus just failing gracefully.
 
 **Results**. Let's look at each case:
-* `Task.Run(VoidFunc)` does **not crash** the process
-* `VoidFuncAsync()` **crashes** the process immediately
-* `Task.Run(VoidFuncAsync)` also **crashes** the process
-* `TaskFuncAsync()` does **not crash** the process
-* `Task.Run(TaskFuncAsync)` does **not crash** the process as well
+* `Task.Run(VoidFunc)` does **not crash** the process.
+* `VoidFuncAsync()` **crashes** the process immediately.
+* `Task.Run(VoidFuncAsync)` also **crashes** the process.
+* `TaskFuncAsync()` does **not crash** the process.
+* `Task.Run(TaskFuncAsync)` does **not crash** the process as well.
 
 Let's examine each scenario in detail to understand the underlying behavior.
 
