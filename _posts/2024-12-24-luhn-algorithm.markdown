@@ -3,7 +3,7 @@ layout:    "single"
 classes:   "wide"
 title:     "Luhn Algorithm: Credit Card Number Validation in Nanoseconds"
 excerpt:   "Ever mistyped your credit card number and gotten an instant error? That split-second check isn't database magic - it's clever 1950s math that catches typos faster than you can blink. From credit cards to ISBNs, this elegant checksum algorithm silently guards against human error millions of times each day."
-tags:      "checksum validation luhn"
+tags:      "checksum data-validation luhn"
 date:      "2024-12-24"
 header:
  teaser: /assets/posts/luhn-algorithm/logo.png

@@ -3,7 +3,7 @@ layout:    "single"
 classes:   "wide"
 title:     "Recursive vs. Iterative DFS: A Performance Surprise"
 excerpt:   "Exploration of DFS implementation performance across various binary tree structures. Article challenges common assumptions about recursion and iteration, showing surprising insights into how tree characteristics and CPU optimizations influence implementation performance."
-tags:      "optimization c++ dfs"
+tags:      "optimizations c++ dfs"
 date:      "2024-08-11"
 toc:       false
 header:

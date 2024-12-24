@@ -3,7 +3,7 @@ layout:    "single"
 classes:   "wide"
 title:     "Rendezvous Hashing: The Path to Faster Hashes Calculation"
 excerpt:   "Examines how to optimize compute complexity of Rendezvous hashing. Explores different approaches to make the process more computationally efficient while maintaining fair data distribution, ultimately proposing an improved method that significantly reduces processing overhead."
-tags:      "rendezvous hashing distributed-systems optimization"
+tags:      "hashing optimizations rendezvous-hashing distributed-systems"
 date:      "2024-12-23"
 toc:       true
 header:
