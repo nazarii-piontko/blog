@@ -147,11 +147,11 @@ Enter a card number to validate it using the Luhn algorithm, or generate a check
 
     <div>
         <button onclick="validate()"
-                style="border: none; padding: 1rem; background-color: #263238; color: white;">
+                style="border: none; border-radius: 4px; padding: 1rem; background-color: black; color: white;">
             Validate
         </button>
         <button onclick="generateCheck()"
-                style="border: none; padding: 1rem; background-color: #263238; color: white;">
+                style="border: none; border-radius: 4px; padding: 1rem; background-color: black; color: white;">
             Generate Check Digit
         </button>
     </div>
