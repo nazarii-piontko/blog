@@ -129,3 +129,107 @@ Let's look at how it works generically:
 5. Check if the total is divisible by a chosen modulus (credit cards use 10).
 
 That's it for now - catch you next time when we dive into more hidden gems of everyday computing that make our digital lives just a bit smoother.
+
+---
+
+**Bonus: Luhn Algorithm Online Validator**
+
+<div>
+    <div>
+        <label for="card-number">Credit Card Number:</label>
+        <input type="text" 
+               id="card-number"
+               placeholder="Enter Credit Card Number"
+               style="border: 1px solid white; border-radius: 4px;">
+    </div>
+
+    <div>
+        <button onclick="validate()"
+                style="border: none; padding: 1rem; background-color: #263238; color: white;">
+            Validate
+        </button>
+        <button onclick="generateCheck()"
+                style="border: none; padding: 1rem; background-color: #263238; color: white;">
+            Generate Check Digit
+        </button>
+    </div>
+
+    <div id="card-number-proc-result"></div>
+</div>
+
+<script>
+    function calculateLuhnSum(number, hasCheckDigit) {
+        let sum = 0;
+        let isSecond = !hasCheckDigit;
+        
+        for (let i = number.length - 1; i >= 0; i--) {
+            let symbol = number[i]
+            if (symbol < '0' || symbol > '9')
+                continue
+
+            let digit = symbol - '0';
+            
+            if (isSecond) {
+                digit *= 2;
+                if (digit > 9) {
+                    digit -= 9;
+                }
+            }
+            
+            sum += digit;
+            isSecond = !isSecond;
+        }
+        
+        return sum;
+    }
+
+    function isValidNumberFormat(number) {
+        return number && /^[\d ]+$/.test(number);
+    }
+
+    function validate() {
+        const number = document.getElementById('card-number').value;
+        const resultDiv = document.getElementById('card-number-proc-result');
+        
+        if (!isValidNumberFormat(number)) {
+            resultDiv.style.color = 'red';
+            resultDiv.textContent = 'Please enter a valid number (digits only)';
+            return;
+        }
+
+        const sum = calculateLuhnSum(number, true);
+        const isValid = sum % 10 === 0;
+        
+        if (isValid) {
+            resultDiv.style.color = 'lime';
+            resultDiv.innerHTML = `Valid number!<br>Total sum: ${sum} (divisible by 10)`;
+        } else {
+            resultDiv.style.color = 'red';
+            resultDiv.innerHTML = `Invalid number!<br>Total sum: ${sum} (not divisible by 10)`;
+        }
+    }
+
+    function generateCheck() {
+        const number = document.getElementById('card-number').value;
+        const resultDiv = document.getElementById('card-number-proc-result');
+        
+        if (!isValidNumberFormat(number)) {
+            resultDiv.style.color = 'red';
+            resultDiv.textContent = 'Please enter a valid number (digits only)';
+            return;
+        }
+
+        const sum = calculateLuhnSum(number, false);
+        const checkDigit = (10 - (sum % 10)) % 10;
+        
+        resultDiv.style.color = 'lime';
+        resultDiv.innerHTML = `Check digit: <strong>${checkDigit}</strong><br>Complete number: <strong>${number}${checkDigit}</strong>`;
+    }
+
+    document.getElementById('card-number').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter')
+            validate();
+    });
+</script>
+
+---
