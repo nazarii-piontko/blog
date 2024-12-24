@@ -134,6 +134,8 @@ That's it for now - catch you next time when we dive into more hidden gems of ev
 
 **Bonus: Luhn Algorithm Online Validator**
 
+Enter a card number to validate it using the Luhn algorithm, or generate a check digit for partial numbers
+
 <div>
     <div>
         <label for="card-number">Credit Card Number:</label>
