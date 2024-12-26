@@ -1,5 +1,5 @@
 ---
 layout: home
-title: Home
+title: Articles
 author_profile: true
 ---
