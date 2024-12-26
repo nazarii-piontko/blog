@@ -14,3 +14,34 @@ $global-transition: none;
 .wide .page {
   width: 100%;
 }
+
+.post-app {
+  background-color: mix(#000, $background-color, 50%);;
+  border-radius: 0.5em;
+  padding: 0.5em;
+}
+
+.post-app * {
+  margin: 0.25em;
+}
+
+.post-app input {
+  border: 1px solid mix(#fff, $background-color, 20%);
+  border-radius: 0.25em;
+}
+
+.post-app button {
+  border: 1px solid mix(#fff, $background-color, 20%);
+  border-radius: 0.25em;
+  padding: 0.5em;
+  color: $text-color;
+  background-color: $background-color;
+}
+
+.post-app .fail {
+  color: red;
+}
+
+.post-app .success {
+  color: lime;
+}

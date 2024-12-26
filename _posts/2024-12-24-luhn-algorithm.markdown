@@ -136,27 +136,22 @@ That's it for now - catch you next time when we dive into more hidden gems of ev
 
 Enter a card number to validate it using the Luhn algorithm, or generate a check digit for partial numbers
 
-<div>
+<div class="post-app">
     <div>
         <label for="card-number">Credit Card Number:</label>
         <input type="text" 
                id="card-number"
-               placeholder="Enter Credit Card Number"
-               style="border: 1px solid white; border-radius: 4px;">
+               placeholder="Enter Credit Card Number">
     </div>
 
     <div>
-        <button onclick="validate()"
-                style="border: none; border-radius: 4px; padding: 1rem; background-color: black; color: white;">
-            Validate
-        </button>
-        <button onclick="generateCheck()"
-                style="border: none; border-radius: 4px; padding: 1rem; background-color: black; color: white;">
-            Generate Check Digit
-        </button>
+        <button onclick="validate()">Validate</button>
+        <button onclick="generateCheck()">Generate Check Digit</button>
     </div>
 
-    <div id="card-number-proc-result"></div>
+    <div>
+        <span id="card-number-processing-result"></span>
+    </div>
 </div>
 
 <script>
@@ -191,10 +186,10 @@ Enter a card number to validate it using the Luhn algorithm, or generate a check
 
     function validate() {
         const number = document.getElementById('card-number').value;
-        const resultDiv = document.getElementById('card-number-proc-result');
+        const resultDiv = document.getElementById('card-number-processing-result');
         
         if (!isValidNumberFormat(number)) {
-            resultDiv.style.color = 'red';
+            resultDiv.className = 'fail';
             resultDiv.textContent = 'Please enter a valid number (digits only)';
             return;
         }
@@ -203,20 +198,20 @@ Enter a card number to validate it using the Luhn algorithm, or generate a check
         const isValid = sum % 10 === 0;
         
         if (isValid) {
-            resultDiv.style.color = 'lime';
-            resultDiv.innerHTML = `Valid number!<br>Total sum: ${sum} (divisible by 10)`;
+            resultDiv.className = 'success';
+            resultDiv.innerHTML = `Valid number! Total sum is <b>${sum}</b> (divisible by 10)`;
         } else {
-            resultDiv.style.color = 'red';
-            resultDiv.innerHTML = `Invalid number!<br>Total sum: ${sum} (not divisible by 10)`;
+            resultDiv.className = 'fail';
+            resultDiv.innerHTML = `Invalid number! Total sum is <b>${sum}</b> (not divisible by 10)`;
         }
     }
 
     function generateCheck() {
         const number = document.getElementById('card-number').value;
-        const resultDiv = document.getElementById('card-number-proc-result');
+        const resultDiv = document.getElementById('card-number-processing-result');
         
         if (!isValidNumberFormat(number)) {
-            resultDiv.style.color = 'red';
+            resultDiv.className = 'fail';
             resultDiv.textContent = 'Please enter a valid number (digits only)';
             return;
         }
@@ -224,8 +219,8 @@ Enter a card number to validate it using the Luhn algorithm, or generate a check
         const sum = calculateLuhnSum(number, false);
         const checkDigit = (10 - (sum % 10)) % 10;
         
-        resultDiv.style.color = 'lime';
-        resultDiv.innerHTML = `Check digit: <strong>${checkDigit}</strong><br>Complete number: <strong>${number}${checkDigit}</strong>`;
+        resultDiv.className = 'success';
+        resultDiv.innerHTML = `Check digit is <b>${checkDigit}</b> and complete number is <b>${number}${checkDigit}</b>`;
     }
 
     document.getElementById('card-number').addEventListener('keypress', function(e) {
@@ -233,5 +228,3 @@ Enter a card number to validate it using the Luhn algorithm, or generate a check
             validate();
     });
 </script>
-
----
