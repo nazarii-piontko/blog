@@ -374,3 +374,12 @@ f.gca().set_ylabel('error of keys')
 |--------- |-----------:|---------:|---------:|-------:|----------:|
 | Baseline | 1,605.5 ns | 30.97 ns | 30.41 ns | 0.7839 |    3280 B |
 | Combined |   125.9 ns |  1.46 ns |  1.29 ns | 0.0305 |     128 B |
+
+Benchmark system:
+* CPU: [Intel© Core™ i7-10510U CPU @ 1.80GHz × 4](https://www.intel.com/content/www/us/en/products/sku/196449/intel-core-i710510u-processor-8m-cache-up-to-4-90-ghz/specifications.html)
+* RAM: 16 GB
+* OS: Debian GNU/Linux 11 bullseye (x86-64)
+* Target Framework: .NET 9
+* Packages:
+    * [murmurhash@1.0.3](https://www.nuget.org/packages/murmurhash/1.0.3)
+    * [BenchmarkDotNet@0.14.0](https://www.nuget.org/packages/BenchmarkDotNet/0.14.0)

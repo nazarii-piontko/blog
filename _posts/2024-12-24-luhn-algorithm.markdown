@@ -112,7 +112,7 @@ int GenerateCheckDigit(string payload)
 }
 ```
 
-Bonus, benchmark results:
+Bonus, benchmark results (system: [Intel© Core™ i7-10510U CPU @ 1.80GHz × 4](https://www.intel.com/content/www/us/en/products/sku/196449/intel-core-i710510u-processor-8m-cache-up-to-4-90-ghz/specifications.html), RAM 16 GB, Debian GNU/Linux 11 bullseye (x86-64), .NET 9:
 
 | Method             | Mean     | Error    | StdDev   | Allocated |
 |------------------- |---------:|---------:|---------:|----------:|
