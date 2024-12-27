@@ -48,7 +48,7 @@ Let's get back to practical matters. As software engineers, we care a lot about 
     <canvas id="mm1-avg-queue-chart"></canvas>
 </div>
 
-Looking at the graph, we can see why that 80% threshold is critical. The queue length starts growing very fast around 70-80% utilization. Let's put some numbers to this:
+Looking at the graph, we can see why that 80% threshold is critical. The queue length starts growing very fast around 80% utilization. Let's put some numbers to this:
 
 * At 70% utilization: average queue length is 1.6 requests
 * At 80% utilization: 3.2 requests
