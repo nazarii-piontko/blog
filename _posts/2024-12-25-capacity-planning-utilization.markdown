@@ -2,7 +2,7 @@
 layout:    "single"
 classes:   "wide"
 title:     "Capacity Planning: Understanding the 80% Server Utilization Rule"
-excerpt:   "Why there is a recommend keeping server utilization below 80%? Using basic queueing theory, we explore how request latency grows exponentially as servers get busier, and why modern autoscaling systems trigger even earlier at 60-70%."
+excerpt:   "Why there is a recommendation of keeping server utilization below 80%? Using basic queueing theory, we explore how request latency grows exponentially as servers get busier, and why modern autoscaling systems trigger even earlier at 60-70%."
 tags:      "capacity-planning queueing-theory"
 date:      "2024-12-27"
 header:
