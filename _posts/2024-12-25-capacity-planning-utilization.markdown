@@ -105,7 +105,10 @@ So that's the math behind the "magic 80% rule". The takeaway is simple: don't pu
             maintainAspectRatio: true,
             plugins: {
                 legend: {
-                    display: false
+                    display: false,
+                    labels: {
+                        color: textColor
+                    }
                 },
                 title: {
                     display: true,
@@ -198,7 +201,7 @@ So that's the math behind the "magic 80% rule". The takeaway is simple: don't pu
         });
     }
 
-    function drawMMCQueueLenChart() {
+    function drawMMCQueueLenChart() { 
         const datasets = [];
         [{k: 1, color: '#00ff00'},
          {k: 3, color: '#00ffff'},
@@ -223,13 +226,16 @@ So that's the math behind the "magic 80% rule". The takeaway is simple: don't pu
             });
         });
 
+        const options = getChartQueueLenOptions();
+        options.plugins.legend.display = true;
+
         const ctx = document.getElementById('mmc-avg-queue-chart');
         new Chart(ctx, {
             type: 'line',
             data: {
                 datasets: datasets
             },
-            options: getChartQueueLenOptions()
+            options: options
         });
     }
 
