@@ -6,7 +6,7 @@ excerpt:   "Why there is a recommendation of keeping server utilization below 80
 tags:      "capacity-planning queueing-theory"
 date:      "2024-12-27"
 header:
- teaser: /assets/posts/capacity-planning/utilization/logo.png
+ teaser: /assets/posts/capacity-planning/utilization/twitter-logo.png
 ---
 
 I plan to start a series of articles about capacity planning. While it's usually heavy on math, I'll try to keep things simple and focus on stuff we can actually use day-to-day. Being a practical software engineer myself, I care more about real-world applications than theoretical concepts.
