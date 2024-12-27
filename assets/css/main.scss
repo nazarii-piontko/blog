@@ -11,12 +11,19 @@ $global-transition: none;
 @import "minimal-mistakes/skins/{{ site.minimal_mistakes_skin | default: 'default' }}"; // skin
 @import "minimal-mistakes"; // main partials
 
+.chart {
+  width: 100%;
+  aspect-ratio: 2/1;
+  color: $text-color;
+  background-color: $background-color;
+}
+
 .wide .page {
   width: 100%;
 }
 
 .post-app {
-  background-color: mix(#000, $background-color, 50%);;
+  background-color: mix(#000, $background-color, 50%);
   border-radius: 0.5em;
   padding: 0.5em;
 }
@@ -44,4 +51,11 @@ $global-transition: none;
 
 .post-app .success {
   color: lime;
+}
+
+@media print {
+  .chart {
+    color: black;
+    background-color: white;
+  }
 }
