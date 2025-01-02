@@ -40,7 +40,7 @@ But mathematical elegance doesn't help when your financial reports don't match a
 Math.Round(1.25, 1, MidpointRounding.AwayFromZero) // Returns 1.3
 ```
 
-The real issue isn't about which rounding method is "correct" - they all have valid use cases. Banking systems need statistical fairness. User interfaces might need to match human expectations. Scientific computing sometimes needs truncation instead of rounding.
+The real issue isn't about which rounding method is "correct" - they all have valid use cases. Banking systems need statistical fairness. User interfaces might need to match human expectations. Scientific computing sometimes needs truncation instead of rounding. [There are more then just two methods](https://en.wikipedia.org/wiki/Rounding).
 
 The problem is that most developers aren't making an active choice. They're using their language's default behavior without realizing it might not match what they want. And by the time they notice, it's usually because something has already gone wrong in production.
 
