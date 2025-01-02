@@ -1,7 +1,7 @@
 ---
 layout:    "single"
 classes:   "wide"
-title:     "Numbers Rounding: More Than One Way"
+title:     "Rounding Numbers: There's More Than One Right Answer"
 excerpt:   "Programming languages often use banker's rounding - rounding to the nearest even digit - which means 1.25 becomes 1.2 while 1.35 becomes 1.4, contradicting the familiar rule of always rounding 5 up"
 tags:      "math"
 date:      "2025-01-02"
