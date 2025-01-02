@@ -17,7 +17,7 @@ Math.Round(1.35, 1) // Returns 1.4
 
 This behavior might drive developers crazy because it contradicts what we learned in school. We were all taught that 5 rounds up. Always. So why does C# round 1.25 down to 1.2?
 
-The answer lies in IEEE 754 standard, which says numbers ending in .5 should round to the nearest even digit. It also called banker's rounding. This means 1.25 goes to 1.2 (2 is even) while 1.35 goes to 1.4 (4 is even).
+The answer lies in [IEEE 754](https://en.wikipedia.org/wiki/IEEE_754) standard, which says numbers ending in .5 should round to the nearest even digit. It also called banker's rounding. This means 1.25 goes to 1.2 (2 is even) while 1.35 goes to 1.4 (4 is even).
 
 Here is a table with more detailed rules:
 
