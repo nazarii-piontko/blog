@@ -21,13 +21,13 @@ The answer lies in IEEE 754 standard, which says numbers ending in .5 should rou
 
 Here is a table with more detailed rules:
 
-| Digit following the rounding position                               | Action     | Example (round to one decimal places) |
-|---------------------------------------------------------------------|------------|---------------------------------------|
-| From `0` to `4`                                                     | Round down | 1.24 → 1.2                            |
-| `5` is the *last digit* and rounding position holds an *even digit* | Round down | 1.25 → 1.2                            |
-| `5` is the *last digit* and rounding position holds an *odd digit*  | Round up   | 1.35 → 1.4                            |
-| `5` is NOT the *last digit*                                         | Round up   | 1.251 → 1.3                           |
-| From `6` to `9`                                                     | Round up   | 1.26 → 1.3                            |
+| Digit following the rounding position                               | Round Direction     | Example (round to one decimal places) |
+|---------------------------------------------------------------------|---------------------|---------------------------------------|
+| From `0` to `4`                                                     | **↓** DOWN          | 1.24 → 1.2                            |
+| `5` is the *last digit* and rounding position holds an *even digit* | **↓** DOWN          | 1.25 → 1.2                            |
+| `5` is the *last digit* and rounding position holds an *odd digit*  | **↑** UP            | 1.35 → 1.4                            |
+| `5` is *NOT* the *last digit*                                       | **↑** UP            | 1.251 → 1.3                           |
+| From `6` to `9`                                                     | **↑** UP            | 1.26 → 1.3                            |
 
 While this sounds like an academic detail, it causes real production issues. Cross-platform applications are especially vulnerable - JavaScript by default rounds up for .5 (also called "round away from zero") while C# rounds to even. Even Excel and Google Sheets have the same default rounding rules. This tiny difference might creating systematic errors that are hard to track down.
 
