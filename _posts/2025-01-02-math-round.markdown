@@ -2,7 +2,7 @@
 layout:    "single"
 classes:   "wide"
 title:     "Numbers Rounding: More Than One Way"
-excerpt:   "Programming languages often use "banker's rounding" - rounding to the nearest even digit - which means 1.25 becomes 1.2 while 1.35 becomes 1.4, contradicting the familiar rule of always rounding 5 up"
+excerpt:   "Programming languages often use `banker's rounding` - rounding to the nearest even digit - which means 1.25 becomes 1.2 while 1.35 becomes 1.4, contradicting the familiar rule of always rounding 5 up"
 tags:      "math"
 date:      "2025-01-02"
 ---
@@ -27,7 +27,7 @@ But mathematical elegance doesn't help when your financial reports don't match a
 
 ```csharp
 // Traditional rounding that actually matches what humans expect
-Math.Round(1.25, 1, MidpointRounding.AwayFromZero)  // Returns 1.3
+Math.Round(1.25, 1, MidpointRounding.AwayFromZero) // Returns 1.3
 ```
 
 The real issue isn't about which rounding method is "correct" - they all have valid use cases. Banking systems need statistical fairness. User interfaces might need to match human expectations. Scientific computing sometimes needs truncation instead of rounding.
