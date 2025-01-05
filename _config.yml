@@ -2,7 +2,7 @@ title: "NP Blog"
 title_separator: "|"
 description: >-
   Hi there! I'm Nazarii Piontko, a software engineer who loves to solve problems with code.
-  On this blog, I share my thoughts and experiences about making software.
+  On my blog, I share my tech discoveries, research findings, and hands-on experiments.
 
 name: "Nazarii Piontko"
 copyright: "Nazarii Piontko"
@@ -12,7 +12,7 @@ author:
   # avatar: "/assets/images/bio-photo.jpg"
   bio: >-
     Hi there! I'm Nazarii Piontko, a software engineer who loves to solve problems with code.
-    On this blog, I share my thoughts and experiences about making software.
+    On my blog, I share my tech discoveries, research findings, and hands-on experiments.
   location: "Poland"
   links:
     - label: "GitHub"
