@@ -269,7 +269,7 @@ Instead of conclusion, here's a practical guide to using USL: Start by running l
                 },
                 title: {
                     display: true,
-                    text: 'AWS RDS for PostgresSQL Benchmark for TPS',
+                    text: 'PostgreSQL Performance Scaling: Throughput vs Concurrent Connections',
                     color: textColor,
                     font: {
                         size: 18
@@ -359,7 +359,7 @@ Instead of conclusion, here's a practical guide to using USL: Start by running l
                 },
                 title: {
                     display: true,
-                    text: 'TPS ratio for different RDS instances',
+                    text: 'Relative Performance Gain: Larger Instances vs db.m6g.large Baseline',
                     color: textColor,
                     font: {
                         size: 18
