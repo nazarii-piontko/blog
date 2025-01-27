@@ -252,7 +252,6 @@ Instead of conclusion, here's a practical guide to using USL: Start by running l
         ]
     };
 
-    const textColor = getComputedStyle(document.getElementsByClassName('chart')[0]).getPropertyValue('color');
     const tpsChartConfig = {
         type: 'line',
         data: tpsData,
@@ -263,17 +262,10 @@ Instead of conclusion, here's a practical guide to using USL: Start by running l
                 legend: {
                     display: true,
                     position: 'bottom',
-                    labels: {
-                        color: textColor
-                    }
                 },
                 title: {
                     display: true,
                     text: 'PostgreSQL Performance Scaling: Throughput vs Concurrent Connections',
-                    color: textColor,
-                    font: {
-                        size: 18
-                    }
                 }
             },
             scales: {
@@ -282,38 +274,12 @@ Instead of conclusion, here's a practical guide to using USL: Start by running l
                     title: {
                         display: true,
                         text: 'Clients/Connections',
-                        color: textColor,
-                        font: {
-                            size: 18
-                        }
-                    },
-                    grid: {
-                        color: 'color-mix(in srgb, white 30%, transparent)'
-                    },
-                    ticks: {
-                        color: textColor,
-                        font: {
-                            size: 18
-                        }
                     }
                 },
                 y: {
                     title: {
                         display: true,
-                        text: 'Transactions per Second',
-                        color: textColor,
-                        font: {
-                            size: 18
-                        }
-                    },
-                    grid: {
-                        color: 'color-mix(in srgb, white 30%, transparent)'
-                    },
-                    ticks: {
-                        color: textColor,
-                        font: {
-                            size: 18
-                        }
+                        text: 'Transactions per Second'
                     }
                 }
             }
@@ -352,18 +318,11 @@ Instead of conclusion, here's a practical guide to using USL: Start by running l
             plugins: {
                 legend: {
                     display: true,
-                    position: 'bottom',
-                    labels: {
-                        color: textColor
-                    }
+                    position: 'bottom'
                 },
                 title: {
                     display: true,
-                    text: 'Relative Performance Gain: Larger Instances vs db.m6g.large Baseline',
-                    color: textColor,
-                    font: {
-                        size: 18
-                    }
+                    text: 'Relative Performance Gain: Larger Instances vs db.m6g.large Baseline'
                 }
             },
             scales: {
@@ -371,45 +330,23 @@ Instead of conclusion, here's a practical guide to using USL: Start by running l
                     type: 'linear',
                     title: {
                         display: true,
-                        text: 'Clients/Connections',
-                        color: textColor,
-                        font: {
-                            size: 18
-                        }
-                    },
-                    grid: {
-                        color: 'color-mix(in srgb, white 30%, transparent)'
-                    },
-                    ticks: {
-                        color: textColor,
-                        font: {
-                            size: 18
-                        }
+                        text: 'Clients/Connections'
                     }
                 },
                 y: {
                     title: {
                         display: true,
-                        text: 'Ratio',
-                        color: textColor,
-                        font: {
-                            size: 18
-                        }
-                    },
-                    grid: {
-                        color: 'color-mix(in srgb, white 30%, transparent)'
-                    },
-                    ticks: {
-                        color: textColor,
-                        font: {
-                            size: 18
-                        }
+                        text: 'Ratio'
                     }
                 }
             }
         }
     };
 
-    new Chart(document.getElementById('benchmark-results-tps'), tpsChartConfig);
-    new Chart(document.getElementById('benchmark-results-ratio'), ratioChartConfig);
+    Chart.defaults.color = getComputedStyle(document.getElementsByClassName('chart')[0]).getPropertyValue('color');
+    Chart.defaults.scale.grid.color = 'color-mix(in srgb, white 30%, transparent)';
+    Chart.defaults.font.size = 18;
+
+    const resultsTpsChar = new Chart(document.getElementById('benchmark-results-tps'), tpsChartConfig);
+    const resultsRatioChar = new Chart(document.getElementById('benchmark-results-ratio'), ratioChartConfig);
 </script>
