@@ -81,7 +81,7 @@ public class UserService(IUserRepository repository)
     public Task<bool> ProcessUserAsync(string email)
     {
         return repository.GetByEmailAsync(email)
-            .MatchAsync(
+            .Match(
                 Some: async user => 
                 {
                     // Do some async/await actions with a user
@@ -97,7 +97,7 @@ public class UserService(IUserRepository repository)
 }
 ```
 
-or if we are really not comfortable with `Match` or `MatchAsync` then something like this:
+or if we are really not comfortable with `Match` then something like this:
 
 ```csharp
 public class UserService(IUserRepository repository)
@@ -120,7 +120,7 @@ public class UserService(IUserRepository repository)
 
 The `Option` approach offers several benefits:
 1. The possibility of a missing value is explicit in the type system
-2. Pattern matching with `Match` or `MatchAsync` ensures we handle both cases or making "null handling" more explicit
+2. Pattern matching with `Match` ensures we handle both cases or making "null handling" more explicit
 3. The intent is clearer - `Option<User>` tells other developers that this operation might not return a user
 
 It is also important to note that `Option<A>` isn't meant to replace all nullable types in the code. We mostly should use it when we want to make the handling of missing values explicit and when working with domain logic where clarity about the possibility of missing values is important for maintaining correct business logic.
@@ -158,12 +158,12 @@ public class CacheService(IDistributedCache cache)
 }
 ```
 
-The `Match` or `MatchAsync` method is the key to handling different cases. It provides a clear, pattern-matching approach to dealing with both the success/failure state and the presence/absence of a value. Here's a detailed look at the matching syntax:
+The `Match` method is the key to handling different cases. It provides a clear, pattern-matching approach to dealing with both the success/failure state and the presence/absence of a value. Here's a detailed look at the matching syntax:
 
 ```csharp
 service
     .GetAsync<User>("user:1")
-    .MatchAsync(
+    .Match(
         Some: user => // Handle success with value
         None: () => // Handle success with no value
         Fail: ex => // Handle failure
