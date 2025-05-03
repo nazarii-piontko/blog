@@ -1,8 +1,8 @@
-FROM ruby:3.3.0-bullseye
+FROM ruby:3.4-bullseye
 
 ENV JEKYLL_ENV=production
 
-RUN apt-get update && apt-get install -y nodejs
+RUN apt-get update && apt-get install -y nodejs plantuml
 RUN gem install bundler
 
 WORKDIR /blog

@@ -1,5 +1,7 @@
 _site/
 vendor/
+?/
+/uml
 
 .sass-cache
 .jekyll-cache
