@@ -5,6 +5,7 @@ title:     "Rendezvous Hashing: Peer-to-Peer Approach to Distributed Caching in 
 excerpt:   "Discover how to leverage rendezvous hashing to create a peer-to-peer caching layer for your .NET service running in Kubernetes - eliminating the need for external cache services while efficiently distributing data for improved performance and resource utilization"
 tags:      "dotnet rendezvous-hashing distributed-systems"
 date:      "2025-05-03"
+toc:       true
 header:
  teaser: /assets/posts/rendezvous-hashing/logo.png
 ---
