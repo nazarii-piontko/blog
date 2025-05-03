@@ -2,7 +2,7 @@
 layout:    "single"
 classes:   "wide"
 title:     "Rendezvous Hashing: Peer-to-Peer Approach to Distributed Caching in .NET"
-excerpt:   "Discover how to leverage rendezvous hashing to create a peer-to-peer caching network across your Kubernetes cluster-eliminating the need for external cache services while efficiently distributing data for improved performance and resource utilization"
+excerpt:   "Discover how to leverage rendezvous hashing to create a peer-to-peer caching layer for your .NET service running in Kubernetes - eliminating the need for external cache services while efficiently distributing data for improved performance and resource utilization"
 tags:      "dotnet rendezvous-hashing distributed-systems"
 date:      "2025-05-03"
 header:
@@ -385,7 +385,12 @@ This approach protects against stale data and network partitions while gracefull
 Similarly it works for write scenario:
 
 ```csharp
-public async Task<CacheUpdateStatus> SetAsync(string key, byte[] value, long version, int? ttlSeconds, CancellationToken cancellationToken)
+public async Task<CacheUpdateStatus> SetAsync(
+    string key,
+    byte[] value,
+    long version,
+    int? ttlSeconds,
+    CancellationToken cancellationToken)
 {
     // Get the list of peers responsible for the given key, based on rendezvous hashing
     var peers = peersRegistry.GetPeersForKey(key);
