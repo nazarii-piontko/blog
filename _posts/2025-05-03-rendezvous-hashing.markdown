@@ -18,6 +18,8 @@ In the Java ecosystem, [Hazelcast](https://hazelcast.com/) has elegantly solved 
 
 Enter rendezvous hashing - a clever algorithm that might just change how you think about distributed caching. By implementing this lightweight approach, we can achieve simplified Hazelcast-like benefits in .NET: harnessing the combined memory of all our service instances to create an efficient distributed cache, without the overhead of external systems or the need to adopt non-native solutions.
 
+![AI-generated article’s logo using ChatGPT to boost engagement](/assets/posts/rendezvous-hashing/logo.png)
+
 > Note: This article is primarily for educational purposes. The concepts and implementations presented here are meant to explore rendezvous hashing and its potential applications. The decision to use these approaches in production environments should be made after careful consideration of your specific requirements, testing, and evaluation of the trade-offs involved.
 
 # Rendezvous Hashing
