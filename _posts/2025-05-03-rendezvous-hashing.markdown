@@ -556,19 +556,7 @@ On the write path, cache uses the database's concurrency tokens as version ident
 
 # When to Use This Approach
 
-This distributed cache approach is most appropriate when:
-
-* You're running in Kubernetes or a similar container orchestration system.
-* Your caching needs per service are moderate (about a few GB).
-* You can tolerate eventual consistency for cached data.
-* You want to avoid the operational overhead and cost of external caching services.
-* Your application already uses optimistic concurrency with version numbers.
-
-It's less suitable for:
-* Systems requiring strict consistency guarantees.
-* Very large datasets (10s of GB or more).
-* Scenarios where cache persistence across restarts is critical.
-* Single-instance applications.
+Let's be honest - this distributed cache solution sits somewhere between a "because I can" engineering project and a genuine necessity. It also might be for that moment when you're looking at your AWS bill and thinking "Why are we paying thousands for managed Redis when our services could share their memory?" Or maybe you're just the type who sees all those service instances hoarding identical data and thinks "I could build something way more elegant than this." This specific implementation makes the most sense when you're running in Kubernetes and can tolerate eventual consistency, but the real question is: are you implementing this because managed caching services are eating your budget, or because building a distributed cache sounds like a fun challenge? Both are valid reasons! Just be aware that if you're in the "because I can" camp, you're trading simplicity for an interesting engineering adventure. But if you're watching your cloud costs climb due to caching, then this might be exactly the solution you need to turn those expensive external dependencies into cheeper, peer-to-peer efficiency. Either way, treat this article as inspiration rather than a blueprint - take what works for your use case and adapt it to your needs.
 
 # Looking to the Future
 
