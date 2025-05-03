@@ -18,6 +18,8 @@ In the Java ecosystem, [Hazelcast](https://hazelcast.com/) has elegantly solved 
 
 Enter rendezvous hashing - a clever algorithm that might just change how you think about distributed caching. By implementing this lightweight approach, we can achieve simplified Hazelcast-like benefits in .NET: harnessing the combined memory of all our service instances to create an efficient distributed cache, without the overhead of external systems or the need to adopt non-native solutions.
 
+> Note: This article is primarily for educational purposes. The concepts and implementations presented here are meant to explore rendezvous hashing and its potential applications. The decision to use these approaches in production environments should be made after careful consideration of your specific requirements, testing, and evaluation of the trade-offs involved.
+
 # Rendezvous Hashing
 
 [Rendezvous Hashing](https://www.eecs.umich.edu/techreports/cse/96/CSE-TR-316-96.pdf), also known as highest random weight (HRW) hashing, works like a sophisticated matchmaking algorithm for data. Originally developed in 1996 by Thaler and Ravishankar for distributed web caching, it solves a fundamental problem in distributed systems: how to consistently map data to nodes while minimizing disruption when the cluster topology changes. Unlike simpler approaches that might hash keys to a fixed range or use modulo operations, rendezvous hashing creates a affinity between each key and every available service instance. It determines which instance should handle each piece of data in a way that minimizes reshuffling when instances come and go, making it ideal for dynamic environments like container orchestration platforms where pods scale up and down frequently.
@@ -514,10 +516,7 @@ app.MapPut("/{id:long}", async (
 
     // If the employee doesn't exist, return 404 Not Found.
     if (employee == null)
-    {
-        context.Response.StatusCode = 404;
-        return null;
-    }
+        return Results.NotFound();
 
     // Apply updates from the request object.
     employee.FullName = request.FullName;
