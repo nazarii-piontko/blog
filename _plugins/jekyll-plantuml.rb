@@ -13,6 +13,7 @@ class Jekyll::PlantumlBlock < Liquid::Block
     site = context.registers[:site]
     body = super.to_s
     name = Digest::MD5.hexdigest(body)
+    plantuml_jar = File.join(File.dirname(__FILE__), 'plantuml.jar')
     unless File.exist?(File.join(site.dest, "uml/#{name}.svg"))
       uml = File.join(site.source, "uml/#{name}.uml")
       svg = File.join(site.source, "uml/#{name}.svg")
@@ -21,7 +22,7 @@ class Jekyll::PlantumlBlock < Liquid::Block
       else
         FileUtils.mkdir_p(File.dirname(uml))
         File.write(uml, ["@startuml\n", body, "\n@enduml"].join)
-        unless system("plantuml -tsvg #{uml} 2>&1")
+        unless system("java -jar #{plantuml_jar} -tsvg #{uml} 2>&1")
           raise "PlantUML failed to compile the following snippet (see logs above):\n#{body}\n"
         end
         site.static_files << Jekyll::StaticFile.new(
