@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker run -it -v $(pwd):/blog -w /blog --network host jekyll $@
+docker run -it -v $(pwd):/blog -w /blog --network host --rm jekyll $@
