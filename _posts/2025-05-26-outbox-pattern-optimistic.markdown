@@ -9,7 +9,7 @@ header:
  teaser: /assets/posts/outbox-pattern/logo.png
 ---
 
-In the [previous article](/_posts/2025-05-19-outbox-pattern), I described the **standard transactional outbox pattern** - a practical solution for ensuring that both database operations and event dispatches succeed together, or not at all. It’s a clever workaround for the fact that distributed systems don’t support distributed transactions out of the box. By using an **Outbox Table** and a background **Relay Process**, we can keep our services decoupled while maintaining consistency guarantees.
+In the [previous article](/2025/05/19/outbox-pattern), I described the **standard transactional outbox pattern** - a practical solution for ensuring that both database operations and event dispatches succeed together, or not at all. It’s a clever workaround for the fact that distributed systems don’t support distributed transactions out of the box. By using an **Outbox Table** and a background **Relay Process**, we can keep our services decoupled while maintaining consistency guarantees.
 
 But once it's implemented and especially once it hits production you start to notice its rough edges.
 
