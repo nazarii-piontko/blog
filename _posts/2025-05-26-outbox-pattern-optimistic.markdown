@@ -165,8 +165,8 @@ public async Task CreateUserAsync(UserDto input)
 
 Now let's examine potential issues with this approach:
 
-* Because of most events get sent immediately and a few get delayed, the order of delivery isn’t guaranteed, if order matters, the consumers need to handle it or this implementation is not an option for that particular problem. To be honest, the standard implementation also does not guarantee in-order delivery by default.
-* If the fallback logic has "too short" acceptable delay window, the system might have too many duplicates, but as with any other **at-least-once delivery** the consumer should handle it.
-* The observability is still needed. Observability is inevitable, but this time it might be slightly simpler.
+* Because of most events get sent immediately and a few get delayed, the **order of delivery isn’t guaranteed**, if order matters, the consumers need to handle it or this implementation is not an option for that particular problem. To be honest, the standard implementation also does not guarantee in-order delivery by default.
+* If the fallback logic has "too short" acceptable delay window, the system **might have many duplicates**, but as with any other at-least-once delivery the consumer should handle it.
+* The observability is still needed. **Observability is inevitable**, but this time it might be slightly simpler.
 
-The good about this approach: we don’t have to rebuild anything, just slightly upgrading the default path. If you already using something like MediatR or any cross-cutting concern implementation for sending outbox event, it just a simple upgrade in just a few places of your codebase.
+The good about this approach: we don’t have to rebuild anything, just slightly upgrading the happy/default path. If you already using something like MediatR or any cross-cutting concern implementation for sending outbox event, it just a simple upgrade in just a few places of your codebase.
