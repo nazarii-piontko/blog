@@ -9,7 +9,7 @@ header:
  teaser: /assets/posts/pert/logo.png
 ---
 
-Ever been asked to estimate a software project when you barely understand the requirements? You know the scenario: a manager appears with "Hey, we've got this new software project..." and suddenly you need to predict development timelines, costs, and resource needs before the next board meeting.
+Ever been asked to estimate a software project when you barely understand the requirements? You know the scenario: a manager appears with "Hey, we've got this new project..." and suddenly you need to predict development timelines, costs, and resource needs before the next board meeting.
 
 In Agile teams, we're comfortable with story points for sprint planning. We know the scope, our velocity, our capacity. Everything works more or less smoothly within two-week cycles. But management wants dates and dollars. The situation gets even more challenging when we're standing there with nothing but a vague idea of what needs to be built, no team yet, no velocity to reference, no historical data from similar projects, just a vision, maybe few documents and wireframes, and an executive who needs an answer.
 
