@@ -1,0 +1,147 @@
+---
+layout:    "single"
+classes:   "wide"
+title:     "How to Deliver Realistic Project Estimations in High Uncertainty"
+excerpt:   "When stakeholders need project estimates but you only have vague requirements, single-point estimates are useless. Using PERT estimation and statistical confidence levels, you can quantify uncertainty and give decision-makers the information they actually need."
+tags:      "project-management estimation pert"
+date:      "2025-08-03"
+header:
+ teaser: /assets/posts/pert/logo.png
+---
+
+Ever been asked to estimate a project when you barely understand the requirements? You know the scenario: a manager appears with "Hey, we've got this new project..." and suddenly you need to predict timelines, costs, and resource needs before the next board meeting.
+
+In Agile teams, we're comfortable with story points for sprint planning. We know the scope, our velocity, our capacity. Everything works more or less smoothly within two-week cycles. But management wants dates and dollars. The situation gets even more challenging when we're standing there with nothing but a vague idea of what needs to be built, no team yet, no velocity to reference, no historical data from similar projects, just a vision, maybe few documents and wireframes, and an executive who needs an answer.
+
+I've been in this situation countless times, especially in my recent presales work where I'm doing these estimations few times per week. Here's how I handle it without giving estimates that are either wildly inaccurate or so padded they're useless.
+
+Let me provide a concrete imaginary example. A mid-size manufacturing company needed an inventory management system. They wanted to track raw materials, manage supplier relationships, monitor stock levels, integrate with existing systems, and generate reports for procurement teams. Sounds like a standard inventory system. But "standard" doesn't mean simple, and it definitely doesn't mean the scope won't explode.
+
+## Breaking It Down
+
+First thing - and this is crucial - you need to break this down into "features" you can actually wrap your head around. But here's the thing about feature breakdown - there's a sweet spot: go too big, like "build supplier management" as a single feature, and you're just guessing. That could be anywhere from a week to three months depending on what "supplier management" means; go too small, breaking everything down into 1-2 man-day features, and you've essentially reinvented waterfall - you'll spend more time planning than building.
+
+What works for me is thinking in terms of something between 3-5 man-days to 15-20 man-days (1-2 sprints) maximum. If I can't estimate something within 15-20 man-days, it needs to be broken down further. Of course, I might often get features that take only 1-2 man-days, but that's not a problem as long as I don't need to estimate hundreds of such features - I don't want to turn estimations into waterfall, I don't want to have 500 very small features with estimations taking a week while still having too much uncertainty. Similarly in oposite direction, sometimes I might estimate feature as 30+ man-days but only if I have historical data from similar activities. 
+
+Who does this breakdown? It depends on the company. Bigger ones have business analysts (aka requirement engineers) for this, but in smaller companies, it's usually engineers doing it themselves. And that's fine, but here's a mistake I see constantly: engineers decomposing work into technical tasks. "Design database schema", "Implement REST API", "Create domain model". However, that's not how modern software gets built. Don't get me wrong, these are valid tasks for individual feature breakdown during development, but it's hard to imagine a scenario where you design the complete database for all features upfront. In the real world, you build features iteratively. You deliver business value and the database evolves as you go. So instead, think about what users can actually do: "Users can create an account and log in", "Staff can receive and process incoming inventory shipments", "Manager can generate reports for procurement teams", etc.
+
+Of course, there are exceptions. You do need to set up CI/CD pipelines. You do need to configure your infrastructure. Set up logging, monitoring, all that stuff. These are legitimate technical tasks that happen usually at the project start. Estimate them separately or as a bundle based on experience - most engineers know roughly how long their standard setup takes in their environment.
+
+When I'm doing the breakdown myself (it happens not that often in fact due to BAs who do it in my current company), I like to think in terms of modules or functional areas first. For our inventory system: "User Management", "Product Catalog", "Stock Management", "Purchase Orders", "Supplier Management", "Integration with ERP", "Reporting Dashboard", "Admin Panel", etc. And then I break each of these down further. For example, "Stock Management" might include: "Staff can receive and process incoming inventory shipments", "Users can view current stock levels and locations", "Warehouse staff can move items between locations", "Managers can adjust stock quantities for damaged or lost items", etc. Each of these is something a user does, not something software engineer does.
+
+## Beyond Single-Point Estimates
+
+So you've got your tasks broken down. Now comes the part where most estimates go wrong - putting numbers on them. The naive approach is to slap a effort number on each task. "Staff can receive and process incoming inventory shipments? 10 man-days." But that's not an estimation, that's a guess dressed up in false precision.
+
+Here's where [**PERT**](https://en.wikipedia.org/wiki/Program_evaluation_and_review_technique) comes in. Instead of one effort number, you give three: **optimistic**, **realistic**, and **pessimistic**. Each number represents a different scenario, and thinking through all three makes your estimations way more accurate.
+
+Back to the feature "Staff can receive and process incoming inventory shipments":
+
+* **Optimistic scenario**. Basic shipment receipt with manual entry of quantities, simple item lookup by SKU, update stock levels in database, print basic receipt. This is the "nothing goes wrong, no surprises, no scope creep" version. It almost never happens, but it could. **4 man-days of development** <small>(just an example, I don't know the actual numbers for this feature 😜, it sounds like 1-2 days on backend and 2 days on frontend)</small>.
+
+* **Realistic scenario**. Now we add barcode scanning for items, purchase order validation, discrepancy tracking when received quantities don't match expected, quality inspection workflow, automatic supplier notifications, and proper audit trails. This is what you'll probably actually build because these aren't nice-to-haves, they're essential for any real warehouse operation. **9 man-days of development** <small>(just another example estimate)</small>.
+
+* **Pessimistic scenario**. Everything above plus photo documentation for damaged items and approval workflows for high-value discrepancies. This is the "everything that could reasonably be added to this feature gets added" version. **12 man-days of development** <small>(just another example estimate)</small>.
+
+In the PERT aproach, the **expected effort** is calculated as:
+
+$$ Expected = \frac{Optimistic + 4 \times Realistic + Pessimistic}{6} $$
+
+So for "Staff can receive and process incoming inventory shipments":
+
+$$ Expected = \frac{4 + 4 \times 9 + 12}{6} = 8.67 \approx 9 \text{ man-days of development} $$
+
+Notice how it's weighted toward the realistic estimate? That's intentional. The optimistic and pessimistic scenarios are outliers, the realistic is what usually happens. There are variations of PERT that use different weights, but this is the most common one.
+
+Let's have another example. Product search.
+
+* **Optimistic scenario**. Basic keyword search, filter by category, show results in a grid, add pagination. Simple, just make it work. **3 man-days of development**.
+
+* **Realistic scenario**. Full-text search with relevance, multiple filters that actually make sense, sorting options. **5 man-days of development**.
+
+* **Pessimistic scenario**. Filter dependencies, performance optimization for 100,000+ SKUs. **8 man-days of development**.
+
+$$ Expected = \frac{3 + 4 \times 5 + 8}{6} = 5.17 \approx 6 \text{ man-days of development} $$
+
+What goes into pessimistic estimates? Include technical complexity, performance requirements, integration challenges. But don't include external dependencies like "waiting for API access" or "legal review takes forever". Those are project risks, not estimation factors. Handle them separately or you'll have unusable estimates.
+
+Also, it's absolutely essential to define and record what you're estimating. Are you estimating pure development time, with testing and documentation handled as a percentage on top? Are you breaking down backend, frontend, and testing separately? Are you including code reviews, deployment, and integration work? There's no right or wrong approach, but you must be consistent and explicit about your scope.
+
+In the examples above, I've put estimations for pure development - no testing, no code review, no documentation. If your team typically spends 30% additional time on testing and code review (probably this is the most standard case), factor that in separately or adjust your estimates accordingly. The key is documenting these assumptions so everyone understands what the numbers represent.
+
+## Adding Confidence Levels
+
+Now that we have expected estimates, we need to quantify our uncertainty. PERT gives us the most likely effort, but how confident are we in that number? To answer this, we need to calculate the **standard deviation** first. The standard deviation shows how much the actual effort is likely to deviate from the expected effort. The standard deviation, σ (sigma), is calculated as:
+
+$$ \sigma = \frac{Pessimistic - Optimistic}{6} $$
+
+For our examples:
+- Receiving shipments: $$ \sigma = (12 - 4) ÷ 6 = 1.33 \text{ man-days} $$
+- Search feature: $$ \sigma = (8 - 3) ÷ 6 = 0.83 \text{ man-days} $$
+
+The expected estimate from PERT formula gives **50% confidence**. To increase the confidence you need to add multiples of standard deviation to the expected estimate. The multiples are called **z-scores** (one-sided for estimates). Here are some common z-scores and their corresponding confidence levels:
+
+| Z-score | Confidence Level | Use Case                      |
+|:-------:|:----------------:|:------------------------------|
+| +0      | **50%**          | Typical PERT estimate         |
+| +0.25   | **60%**          | Low certainty buffer          |
+| +0.52   | **70%**          |                               |
+| +0.84   | **80%**          | Recommended for PERT estimate |
+| +1.28   | **90%**          | High certainty                |
+| +1.64   | **95%**          | Very High certainty           |
+| +2.33   | **99%**          | Worst-case planning           |
+
+<small>If you would like to calculate confidence level for specific number of standard deviations, you can Excel function [NORMSINV](https://support.microsoft.com/en-us/office/normsinv-function-8d1bce66-8e4d-4f3b-967c-30eed61f019d).</small>
+
+So here's how you do it for multiple features:
+
+1. **Calculate the total expected effort of all features**: $$ Expected_{total} = Expected_1 + Expected_2 + Expected_3 + ... $$
+
+2. **Calculate the total standard deviation of all features**: $$ \sigma_{total} = \sqrt{σ_1^2 + σ_2^2 + σ_3^2 + ...} $$ Notice that we square each standard deviation, add them up, and then take the square root of the sum.
+
+3. **Add the multiplication of z-score and standard deviation to the total expected effort to get the final estimation**: $$ Estimation = Expected_{total} + (Z_{score} \times σ_{total}) $$
+
+Example, lets assume Stock Management module has the following features:
+- Staff can receive and process incoming inventory shipments: 8.67 man-days, σ=1.33
+- Users can view current stock levels and locations: 5 man-days, σ=1.2
+- Warehouse staff can move items between locations: 4 man-days, σ=1.1
+
+Step 1: Total expected effort = 8.67 + 5 + 4 = 17.67 man-days
+
+Step 2: Total standard deviation = √(1.33² + 1.2² + 1.1²) = √4.42 = 2.1 man-days
+
+Step 3: Estimation for different confidence levels:
+- **50% confidence**: 18 man-days (no additional buffer)
+- **80% confidence**: 17.67 + (0.84 × 2.1) = 19.43 ≈ 20 man-days
+- **90% confidence**: 17.67 + (1.28 × 2.1) = 20.36 ≈ 21 man-days
+- **95% confidence**: 17.67 + (1.65 × 2.1) = 21.14 ≈ 22 man-days
+
+## Communicating Uncertainty
+
+When you present estimates with confidence levels, you're not just giving numbers - you're enabling informed decision-making. So instead of saying "Stock Management will take 18 days" and hoping for the best, you can say: "I expect 18 days, but that's only 50% confidence. If you want 80% confidence, plan for 20 days. For 95% confidence, budget 22 days". Much better than pretending uncertainty doesn't exist.
+
+This approach transforms project conversations. Instead of arguing whether estimates are "right" or "wrong", you're discussing risk tolerance and business priorities. A startup might accept 60% confidence to move fast and cut corners, while a regulated industry might demand 95% confidence to ensure everything works as expected. The math stays the same, but the business decision becomes explicit. When stakeholders understand that higher confidence means more time and budget, they can make informed trade-offs rather than just demanding impossible certainty.
+
+## Tips
+
+* **Do not estimate alone**. If possible, involve the actual implementers in the estimation process, if not, add at least 1-2 additional persons who can challenge your assumptions. Their experience and knowledge will help you make more accurate estimates.
+
+* **Document assumptions**. Document what's included, what's not, what you're assuming about the tech stack, integrations, scenarios for optimistic, realistic and pessimistic estimations, everything.
+
+* **There will always be uncertainty**. Apply common sense, make assumptions, document them, and move on with estimations. During project development, review your assumptions and keep the scope close to them.
+
+* **Don't be too pessimistic on all estimations**. Pessimistic scenarios are outliers, not what usually happens. Some features might exceed your pessimistic estimate, that's fine, but on average, the whole project will be closer to your estimation.
+
+* **Account for overhead**. Do not forget to account for overhead, such as code reviews, testing, Scrum ceremonies, and those "quick sync" meetings that sometimes eat half of the day. Decide whether you want to include it in your estimates explicitly or add it as a percentage on top. Typically you can expect about 30-40% additional time for testing and code review, and 10-20% for meetings.
+
+* **Use historical data**. If you have data from similar past projects, use it to sanity-check your estimates. If you don't have historical data, start tracking it.
+
+## Last but not least
+
+Nobody expects perfection, but everyone appreciates honesty about uncertainty. You're not a fortune teller. The goal is giving decision-makers useful information while being honest about uncertainty. Next time someone asks for an estimate, try this: break it into user-facing features, use three-point estimation, calculate standard deviation, present confidence levels. Your estimates will actually help people make decisions instead of just being numbers you pulled out of thin air.
+
+## Further Reading
+
+What I've shown here uses the basic PERT approach. If you want to get fancy with more sophisticated techniques, learn alternative approaches, check out [Steve McConnell's "Software Estimation: Demystifying the Black Art"](https://www.amazon.com/Software-Estimation-Demystifying-Developer-Practices/dp/0735605351/). 
+
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript" async></script>
