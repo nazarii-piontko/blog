@@ -19,11 +19,11 @@ Let me provide a concrete imaginary example. A mid-size manufacturing company ne
 
 ## Breaking It Down
 
-First thing - and this is crucial - you need to break this down into "features" you can actually wrap your head around. But here's the thing about feature breakdown - there's a sweet spot: go too big, like "build supplier management" as a single feature, and you're just guessing. That could be anywhere from a week to three months depending on what "supplier management" means; go too small, breaking everything down into 1-2 man-day features, and you've essentially reinvented waterfall - you'll spend more time planning than building.
+First thing, you need to break this down into "features" you can actually wrap your head around. But here's the thing about feature breakdown - there's a sweet spot: go too big, like "build supplier management" as a single feature, and you're just guessing. That could be anywhere from a week to three months depending on what "supplier management" means; go too small, breaking everything down into 1-2 man-day features, and you've essentially reinvented waterfall - you'll spend more time planning than building.
 
-What works for me is thinking in terms of something between 3-5 man-days to 15-20 man-days (1-2 sprints) maximum. If I can't estimate something within 15-20 man-days, it needs to be broken down further. Of course, I might often get features that take only 1-2 man-days, but that's not a problem as long as I don't need to estimate hundreds of such features - I don't want to turn estimations into waterfall, I don't want to have 500 very small features with estimations taking a week while still having too much uncertainty. Similarly in oposite direction, sometimes I might estimate feature as 30+ man-days but only if I have historical data from similar activities. 
+What works for me is thinking in terms of something between 3-5 man-days to 15-20 man-days (1-2 sprints) maximum. If I can't estimate something within 15-20 man-days, it needs to be broken down further. Of course, I might often get features that take only 1-2 man-days, but that's not a problem as long as I don't need to estimate hundreds of such features - I don't want to turn estimations into waterfall, I don't want to have 500 very small features with estimations taking a week while still having too much uncertainty. Similarly, in opposite direction, sometimes I might estimate feature as 30+ man-days but only if I have historical data from similar activities. 
 
-Who does this breakdown? It depends on the company. Bigger ones have business analysts (aka requirement engineers) for this, but in smaller companies, it's usually engineers doing it themselves. And that's fine, but here's a mistake I see constantly: engineers decomposing work into technical tasks. "Design database schema", "Implement REST API", "Create domain model". However, that's not how modern software gets built. Don't get me wrong, these are valid tasks for individual feature breakdown during development, but it's hard to imagine a scenario where you design the complete database for all features upfront. In the real world, you build features iteratively. You deliver business value and the database evolves as you go. So instead, think about what users can actually do: "Users can create an account and log in", "Staff can receive and process incoming inventory shipments", "Manager can generate reports for procurement teams", etc.
+Who does this breakdown? It depends on the company. Bigger ones have business analysts (aka requirement engineers) for this, but in smaller companies, it's usually engineers doing it themselves. And that's fine, but here's a mistake I see constantly, engineers decomposing work into technical tasks. "Design database schema", "Implement REST API", "Create domain model". However, that's not how modern software gets built. Don't get me wrong, these are valid tasks for individual feature breakdown during development, but it's hard to imagine a scenario where you design the complete database for all features upfront. In the real world, you build features iteratively. You deliver business value and the database evolves as you go. So instead, think about what users can actually do: "Users can create an account and log in", "Staff can receive and process incoming inventory shipments", "Manager can generate reports for procurement teams", etc.
 
 Of course, there are exceptions. You do need to set up CI/CD pipelines. You do need to configure your infrastructure. Set up logging, monitoring, all that stuff. These are legitimate technical tasks that happen usually at the project start. Estimate them separately or as a bundle based on experience - most engineers know roughly how long their standard setup takes in their environment.
 
@@ -31,7 +31,7 @@ When I'm doing the breakdown myself (it happens not that often in fact due to BA
 
 ## Beyond Single-Point Estimates
 
-So you've got your tasks broken down. Now comes the part where most estimates go wrong - putting numbers on them. The naive approach is to slap a effort number on each task. "Staff can receive and process incoming inventory shipments? 10 man-days." But that's not an estimation, that's a guess dressed up in false precision.
+So, you've got your tasks broken down. Now comes the part where most estimates go wrong - putting numbers on them. The naive approach is to slap a effort number on each task. "Staff can receive and process incoming inventory shipments? 10 man-days." But that's not an estimation, that's a guess dressed up in false precision.
 
 Here's where [**PERT**](https://en.wikipedia.org/wiki/Program_evaluation_and_review_technique) comes in. Instead of one effort number, you give three: **optimistic**, **realistic**, and **pessimistic**. Each number represents a different scenario, and thinking through all three makes your estimations way more accurate.
 
@@ -43,7 +43,7 @@ Back to the feature "Staff can receive and process incoming inventory shipments"
 
 * **Pessimistic scenario**. Everything above plus photo documentation for damaged items and approval workflows for high-value discrepancies. This is the "everything that could reasonably be added to this feature gets added" version. **12 man-days of development** <small>(just another example estimate)</small>.
 
-In the PERT aproach, the **expected effort** is calculated as:
+In the PERT approach, the **expected effort** is calculated as:
 
 $$ Expected = \frac{Optimistic + 4 \times Realistic + Pessimistic}{6} $$
 
@@ -67,7 +67,7 @@ What goes into pessimistic estimates? Include technical complexity, performance 
 
 Also, it's absolutely essential to define and record what you're estimating. Are you estimating pure development time, with testing and documentation handled as a percentage on top? Are you breaking down backend, frontend, and testing separately? Are you including code reviews, deployment, and integration work? There's no right or wrong approach, but you must be consistent and explicit about your scope.
 
-In the examples above, I've put estimations for pure development - no testing, no code review, no documentation. If your team typically spends 30% additional time on testing and code review (probably this is the most standard case), factor that in separately or adjust your estimates accordingly. The key is documenting these assumptions so everyone understands what the numbers represent.
+In the examples above, I've put estimations for pure development - no testing, no code review, no documentation. If your team typically spends 30% additional time on testing and code review (probably this is the most standard case), factor that in separately or adjust your estimates accordingly. The key is documenting these assumptions, so everyone understands what the numbers represent.
 
 ## Adding Confidence Levels
 
@@ -79,7 +79,7 @@ For our examples:
 - Receiving shipments: $$ \sigma = (12 - 4) ÷ 6 = 1.33 \text{ man-days} $$
 - Search feature: $$ \sigma = (8 - 3) ÷ 6 = 0.83 \text{ man-days} $$
 
-The expected estimate from PERT formula gives **50% confidence**. To increase the confidence you need to add multiples of standard deviation to the expected estimate. The multiples are called **z-scores** (one-sided for estimates). Here are some common z-scores and their corresponding confidence levels:
+The expected estimate from PERT formula gives **50% confidence**. To increase the confidence, you need to add multiples of standard deviation to the expected estimate. The multiples are called **z-scores** (one-sided for estimates). Here are some common z-scores and their corresponding confidence levels:
 
 | Z-score | Confidence Level | Use Case                      |
 |:-------:|:----------------:|:------------------------------|
