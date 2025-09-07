@@ -70,10 +70,10 @@ footer:
       icon: "fab fa-fw fa-medium"
       url: "https://medium.com/@npiontko"
 
-# comments:
-#   provider: disqus
-#   disqus:
-#     shortname: np-blog-1
+comments:
+  provider: disqus
+  disqus:
+    shortname: np-blog-1
 
 exclude:
   - Dockerfile

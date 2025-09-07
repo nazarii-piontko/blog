@@ -53,7 +53,7 @@ Why does this happen? Again two key factors: contention and coherency. They repr
 
 Instead of conclusion, here's a practical guide to using USL: Start by running load tests on the current system with increasing concurrency (1, 2, 4, 8, 16, 32, 64 concurrent operations) and measure throughput for each level. Normalize these results with single-operation throughput as baseline 1.0, then fit the points to the USL formula. The resulting alpha and beta values reveal your next steps - if alpha (contention) dominates and your curve flattens early, the system is hitting resource contention and hardware upgrades might help. But if beta (coherency) dominates and performance actually drops at higher concurrency, the system is hitting fundamental coordination overhead that more hardware probably won't fix much - time to look at architectural changes instead. That's the beauty of USL - it tells you whether to spend money on infrastructure or invest time in optimization before you make the decision.
 
-<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript" async></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript" async></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
     const tpsLargeActualData = [

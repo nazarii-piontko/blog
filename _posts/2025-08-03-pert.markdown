@@ -144,4 +144,4 @@ Nobody expects perfection, but everyone appreciates honesty about uncertainty. Y
 
 What I've shown here uses the basic PERT approach. If you want to get fancy with more sophisticated techniques, learn alternative approaches, check out [Steve McConnell's "Software Estimation: Demystifying the Black Art"](https://www.amazon.com/Software-Estimation-Demystifying-Developer-Practices/dp/0735605351/). 
 
-<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript" async></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript" async></script>

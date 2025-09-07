@@ -22,8 +22,8 @@ I have included links on this website for your use and reference. I am not respo
 
 Link to the privacy policy of third-party service providers used by the website
 
-*   [Google Analytics](https://policies.google.com/privacy)
-*   [Disqus](https://disqus.com/privacy-policy/)
+* [Google Analytics](https://policies.google.com/privacy)
+* [Disqus](https://disqus.com/privacy-policy/)
 
 ## Security
 

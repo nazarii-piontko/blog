@@ -66,7 +66,7 @@ The graph reveals something interesting: the more instances we have, the further
 
 So that's the math behind the "magic 80% rule". The takeaway is simple: don't push your services past 80% utilization, and start scaling earlier if you can. This isn't just some arbitrary number - it's backed by queueing theory and tested in production environments.
 
-<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
     function factorial(n) {
