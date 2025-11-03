@@ -1,0 +1,364 @@
+---
+layout: single
+title: ".NET Aspire Deployment: A Reality Check on Production Readiness"
+excerpt: "An honest assessment of .NET Aspire's deployment capabilities beyond local development - examining Docker Compose, Kubernetes, Azure, and AWS deployment options with their current limitations."
+tags: dotnet, aspire, deployment, production, kubernetes, docker, azure, aws
+date: 2025-09-07
+toc: true
+---
+
+# Introduction
+
+.NET Aspire has gained significant attention as Microsoft's answer to simplifying cloud-native development. While its local development experience is undeniably powerful—offering an excellent replacement for Docker Compose with superior orchestration and observability - the real test of any development framework lies in its production deployment capabilities.
+
+The early versions of .NET Aspire were primarily focused on the local development experience, with limited production deployment options. This was a significant limitation that prevented many teams from adopting Aspire for real-world applications. But what's the current state?
+
+To understand Aspire's deployment capabilities, let's examine a typical distributed application that includes the most common infrastructure dependencies. The sample application consists of:
+
+- **Order Service**: A .NET 9 REST API
+- **PostgreSQL**: Primary database
+- **Redis**: Caching layer
+- **RabbitMQ**: Message broker
+
+Here's how this application is defined in the Aspire AppHost:
+
+```csharp
+// Program.cs in AppHost project
+var builder = DistributedApplication.CreateBuilder(args);
+
+// Configure PostgreSQL database with persistent storage
+var postgres = builder.AddPostgres("postgres")
+    .WithDataVolume()
+    .AddDatabase("orderdb");
+
+// Configure Redis cache with persistent storage
+var redis = builder.AddRedis("redis")
+    .WithDataVolume();
+
+// Configure RabbitMQ message broker with persistent storage
+var rabbitmq = builder.AddRabbitMQ("messaging")
+    .WithDataVolume();
+
+// Configure the Order Service API with dependencies
+var orderService = builder.AddProject<Projects.AspireDiscovery_OrderService>("order-service")
+    .WithExternalHttpEndpoints()
+    .WithHttpHealthCheck("/health")
+    .WithReference(postgres)
+    .WithReference(redis)
+    .WithReference(rabbitmq);
+
+builder.Build().Run();
+```
+
+Also we need to install Aspire CLI tool. To install it, execute the following command:
+```bash
+dotnet tool install -g aspire.cli --prerelease
+```
+
+# Docker Compose
+
+Lets start with the simplest option, docker compose file. While this is not really production ready, it's a good starting point. You still can you it in local development and in simple production environments. So what options do we have?
+
+There are two options to generate docker compose file, built-in publisher and community tool Aspirate.
+
+The built-in publisher is a part of .NET Aspire and is available in .NET Aspire 9.2 and later. To generate docker compose file, you need to add `Aspire.Hosting.Docker` package to AppHost project and enable docker compose publishing in AppHost by calling `AddDockerComposePublisher` method. Then you can use Aspire CLI to generate docker compose file. Execute the following command in your AppHost project:
+
+```bash
+aspire publish -o deployment-artifacts
+```
+
+This will generate docker compose file in `deployment-artifacts` directory as well as .env file with environment variables.
+Here is example of generated docker compose file:
+
+```yaml
+services:
+  aspire-discovery-dashboard:
+    image: "mcr.microsoft.com/dotnet/nightly/aspire-dashboard:latest"
+    expose:
+      - "18888"
+      - "18889"
+    networks:
+      - "aspire"
+    restart: "always"
+  postgres:
+    image: "docker.io/library/postgres:17.5"
+    environment:
+      POSTGRES_HOST_AUTH_METHOD: "scram-sha-256"
+      POSTGRES_INITDB_ARGS: "--auth-host=scram-sha-256 --auth-local=scram-sha-256"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+    expose:
+      - "5432"
+    volumes:
+      - type: "volume"
+        target: "/var/lib/postgresql/data"
+        source: "aspirediscovery.apphost-b4e34dbb6e-postgres-data"
+        read_only: false
+    networks:
+      - "aspire"
+  redis:
+    image: "docker.io/library/redis:7.4"
+    command:
+      - "-c"
+      - "redis-server --requirepass $$REDIS_PASSWORD --save 60 1"
+    entrypoint:
+      - "/bin/sh"
+    environment:
+      REDIS_PASSWORD: "${REDIS_PASSWORD}"
+    expose:
+      - "6379"
+    volumes:
+      - type: "volume"
+        target: "/data"
+        source: "aspirediscovery.apphost-b4e34dbb6e-redis-data"
+        read_only: false
+    networks:
+      - "aspire"
+  messaging:
+    image: "docker.io/library/rabbitmq:4.1"
+    environment:
+      RABBITMQ_DEFAULT_USER: "guest"
+      RABBITMQ_DEFAULT_PASS: "${MESSAGING_PASSWORD}"
+    expose:
+      - "5672"
+    volumes:
+      - type: "volume"
+        target: "/var/lib/rabbitmq"
+        source: "aspirediscovery.apphost-b4e34dbb6e-messaging-data"
+        read_only: false
+    networks:
+      - "aspire"
+  order-service:
+    image: "${ORDER_SERVICE_IMAGE}"
+    environment:
+      OTEL_DOTNET_EXPERIMENTAL_OTLP_EMIT_EXCEPTION_LOG_ATTRIBUTES: "true"
+      OTEL_DOTNET_EXPERIMENTAL_OTLP_EMIT_EVENT_LOG_ATTRIBUTES: "true"
+      OTEL_DOTNET_EXPERIMENTAL_OTLP_RETRY: "in_memory"
+      ASPNETCORE_FORWARDEDHEADERS_ENABLED: "true"
+      HTTP_PORTS: "${ORDER_SERVICE_PORT}"
+      ConnectionStrings__orderdb: "Host=postgres;Port=5432;Username=postgres;Password=${POSTGRES_PASSWORD};Database=orderdb"
+      ConnectionStrings__redis: "redis:6379,password=${REDIS_PASSWORD}"
+      ConnectionStrings__messaging: "amqp://guest:${MESSAGING_PASSWORD}@messaging:5672"
+      OTEL_EXPORTER_OTLP_ENDPOINT: "http://aspire-discovery-dashboard:18889"
+      OTEL_EXPORTER_OTLP_PROTOCOL: "grpc"
+      OTEL_SERVICE_NAME: "order-service"
+    ports:
+      - "${ORDER_SERVICE_PORT}"
+    networks:
+      - "aspire"
+networks:
+  aspire:
+    driver: "bridge"
+volumes:
+  aspirediscovery.apphost-b4e34dbb6e-postgres-data:
+    driver: "local"
+  aspirediscovery.apphost-b4e34dbb6e-redis-data:
+    driver: "local"
+  aspirediscovery.apphost-b4e34dbb6e-messaging-data:
+    driver: "local"
+```
+
+.env file:
+```env
+# Default container port for order-service
+ORDER_SERVICE_PORT=8080
+
+# Parameter postgres-password
+POSTGRES_PASSWORD=
+
+# Parameter redis-password
+REDIS_PASSWORD=
+
+# Parameter messaging-password
+MESSAGING_PASSWORD=
+
+# Container image name for order-service
+ORDER_SERVICE_IMAGE=order-service:latest
+
+ORDER_SERVICE_PORT=8080
+```
+
+As we can see, it is simple docker compose file with all the necessary services and environment variables. Even Aspire Dashboard is included in the docker compose file. For the reference [Aspire Dashboard](https://learn.microsoft.com/en-us/dotnet/aspire/fundamentals/dashboard/standalone) is a standalone web application that provides a user interface and API for monitoring distributed applications. It is a part of .NET Aspire.
+
+The second option is to use Aspirate tool. It is a community tool that can generate docker compose file from Aspire AppHost project. We will back to this option later during Kubernetes deployment. Before the built-in publisher, Aspirate was the only option to generate docker compose file.
+
+# Kubernetes
+
+There are two options to deploy Aspire application to Kubernetes. The commonly used one is to use Aspirate tool to generate k8s manifests, but starting from .NET Aspire 9.2, there is an option to use built-in publisher to generate k8s manifests. The built-in is in prerelease state.
+
+## Aspirate
+
+[Aspirate](https://prom3theu5.github.io/aspirational-manifests/getting-started.html) is a community tool that can generate k8s manifests from Aspire AppHost project. First, we need to install a global tool:
+
+```bash
+dotnet tool install -g aspirate --prerelease
+```
+
+Then, being in AppHost project directory, execute the following command:
+
+```bash
+aspirate init
+```
+
+This will create a `aspirate.yaml` file in the root directory of the project. This file contains the configuration for the Aspirate tool. Here it is console output:
+
+```bash
+
+     _                    _           ___  
+    / \     ___   _ __   (_)  _ __   ( _ ) 
+   / _ \   / __| | '_ \  | | | '__|  / _ \ 
+  / ___ \  \__ \ | |_) | | | | |    | (_) |
+ /_/   \_\ |___/ | .__/  |_| |_|     \___/ 
+                 |_|                       
+Handle deployments of a .NET Aspire AppHost
+
+
+── Handle Initialization Defaults ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+(✔) Done: Set 'Container builder' to 'docker'.
+Aspirate supports setting a fall-back value for projects that have not yet set a 'ContainerRegistry' in their csproj file.
+Would you like to set a fall-back value for the container registry? [y/n] (n): n
+Aspirate supports setting a repository prefix for all for projects.
+Would you like to set this value? [y/n] (n): n
+(✔) Done: Set 'Container fallback tag' to 'latest'.
+Aspirate supports setting a custom directory for 'Templates' that are used when generating kustomize manifests.
+Would you like to use a custom directory (selecting 'n' will default to built in templates ? [y/n] (n): n
+(✔) Done: Configuration for aspirate has been bootstrapped successfully at '/home/nazar/data/projects/AspireDiscovery/AspireDiscovery.AppHost/./aspirate.json'.
+
+ 🚀 Execution Completed 🚀
+```
+
+The `aspirate.json` it self, containe the following configuration:
+
+```json
+{
+  "TemplatePath": null,
+  "ContainerSettings": {
+    "Registry": null,
+    "RepositoryPrefix": null,
+    "Tags": [
+      "latest"
+    ],
+    "Builder": "docker",
+    "BuildArgs": null,
+    "Context": null
+  }
+}
+```
+
+Then we can generate k8s manifests by executing the following command:
+
+```bash
+$ aspirate generate
+
+     _                    _           ___  
+    / \     ___   _ __   (_)  _ __   ( _ ) 
+   / _ \   / __| | '_ \  | | | '__|  / _ \ 
+  / ___ \  \__ \ | |_) | | | | |    | (_) |
+ /_/   \_\ |___/ | .__/  |_| |_|     \___/ 
+                 |_|                       
+Handle deployments of a .NET Aspire AppHost
+
+
+── Handling Aspirate State ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+── Handling Aspirate Secrets ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+Secrets are to be protected by a password
+
+Please enter new Password: ********
+Please enter it again to confirm: ********
+Secret State has been initialised!.
+
+── Handling Configuration ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+Successfully loaded existing aspirate bootstrap settings from '.'.
+
+── Handling Aspire Manifest ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+Generating Aspire Manifest for supplied App Host
+(✔) Done:  Created Aspire Manifest At Path: /home/nazar/data/projects/AspireDiscovery/AspireDiscovery.AppHost/manifest.json
+
+── Selecting Required Components ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+Resource 'aspire-discovery' does not have a type. Skipping as UnsupportedResource.
+Resource 'order-service' is unsupported type 'project.v1'. Skipping as UnsupportedResource.
+
+── Handling Aspire Dashboard ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+Would you like to deploy the aspire dashboard and connect the OTLP endpoint? [y/n] (y): y
+
+── Handling Inputs ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+Successfully generated a value for postgres-password's Input Value 'value'
+Successfully generated a value for redis-password's Input Value 'value'
+Successfully generated a value for messaging-password's Input Value 'value'
+(✔) Done:  Input values have all been assigned.
+
+── Handle Value and Parameter Substitution ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+── Handling DAPR Components ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+No Dapr components selected, skipping Dapr annotations.
+
+── Gathering Information about deployables ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+No project components selected. Skipping execution of container detail gathering for them.
+No project components selected. Skipping execution of container detail gathering for them.
+
+── Handling Projects ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+No project components selected. Skipping build and publish action.
+
+── Handling Dockerfiles ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+No Dockerfile components selected. Skipping build and publish action.
+
+── Populating Secrets File ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+(✔) Done:  Secret State has been saved.
+
+── Handle Image Pull Policy ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+── Handling Namespace ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+Would you like to deploy all manifests to a custom namespace? [y/n] (n): y
+Enter the namespace you would like to deploy all manifests to:  test
+ Generated manifests will be deployed to the test namespace.
+
+── Handle Kustomize Manifests ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+Generating kustomize manifests to run against your kubernetes cluster:
+(✔) Done:  Generating /home/nazar/data/projects/AspireDiscovery/AspireDiscovery.AppHost/aspirate-output/postgres
+(✔) Done:  Generating /home/nazar/data/projects/AspireDiscovery/AspireDiscovery.AppHost/aspirate-output/redis
+(✔) Done:  Generating /home/nazar/data/projects/AspireDiscovery/AspireDiscovery.AppHost/aspirate-output/messaging
+(✔) Done:  Generating /home/nazar/data/projects/AspireDiscovery/AspireDiscovery.AppHost/aspirate-output/aspire-discovery-dashboard
+
+── Handling Final Manifest ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+Would you like to generate the top level kustomize manifest to run against your kubernetes cluster? [y/n] (y): y
+Generating namespace manifest with name 'test'
+(✔) Done:  Generating aspirate-output/namespace.yaml
+Generating Aspire Dashboard manifest
+(✔) Done:  Generating aspirate-output/dashboard.yaml
+Generating final manifest with name 'kustomization.yaml'
+(✔) Done:  Generating aspirate-output/kustomization.yaml
+
+ 🚀 Execution Completed 🚀
+```
+
+As the result we have a set of k8s manifests that we can deploy to our k8s cluster. Aspirate uses kustomize by default to generate these manifests, so we can use kustomize to deploy them. Here is a generate files structure:
+
+```bash
+aspirate-output
+├── aspire-discovery-dashboard
+│   ├── deployment.yaml
+│   ├── kustomization.yaml
+│   └── service.yaml
+├── dashboard.yaml
+├── kustomization.yaml
+├── messaging
+│   ├── kustomization.yaml
+│   ├── service.yaml
+│   └── statefulset.yaml
+├── namespace.yaml
+├── postgres
+│   ├── kustomization.yaml
+│   ├── service.yaml
+│   └── statefulset.yaml
+└── redis
+    ├── kustomization.yaml
+    ├── service.yaml
+    └── statefulset.yaml
+```
+
+! Important note:
+
+By default aspirate does not generate health checks for the services, so we need to add them manually. Similarly, there is no possiblity to add ingress and load balancer. All these additional resources are not generated by aspirate, so we need to add them manually.
+
+Aspirate allows to generate also helm charts. However, due to the above limitations, it is not recommended to use helm charts for deployment. It would be hard to maintain customizations for the generated helm charts, and it would be hard to maintain the generated k8s manifests as well.
