@@ -6,6 +6,8 @@ excerpt: Stop paying for AWS services during development or fighting over shared
 tags: dotnet, aspire, aws, localstack
 date: 2025-11-03
 toc: false
+header:
+ teaser: /assets/posts/aspire-localstack/logo.png
 ---
 
 Developing a .NET application that uses AWS services presents several challenges. Either we're constantly hitting real AWS and watching our bill climb, or mocking everything and wondering if code actually works. Teams often share dev environments, stepping on each other's data and debugging sessions. Developers frequently get stuck waiting for the "dev environment" to be free while someone else is testing their integration. .NET Aspire helps with microservice orchestration, but it doesn't solve the AWS development problem.
