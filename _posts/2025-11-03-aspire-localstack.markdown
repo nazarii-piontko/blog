@@ -56,7 +56,7 @@ app.MapGet("/health", () => "Healthy");
 app.Run();
 ```
 
-Having this structure in place, we can now enhance the AppHost to integrate LocalStack and AWS services. First, we need to add the necessary Aspire LocalStack package to our AppHost project. In the `AppHost.csproj` file, add the following package reference:
+Having this structure in place, we can now enhance the AppHost to integrate LocalStack and AWS services. First, we need to add the necessary Aspire LocalStack package `LocalStack.Aspire.Hosting` to AppHost project via NuGet. In the `AppHost.csproj` file this looks like this:
 
 ```xml
 <PackageReference Include="LocalStack.Aspire.Hosting" />
@@ -181,7 +181,7 @@ Once the infrastructure is defined, we can reference these resources in our serv
 
 ```csharp
 var apiService = builder.AddProject<Projects.ApiService>("api")
-    .WithHttpHealthCheck("/health") // Configure health check endpoint
+    .WithHttpHealthCheck("/health")
     .WithReference(awsStack) // Reference the AWS stack for automatic configuration
     .WithEnvironment("Storage__BucketName", awsStackOutputs.BucketName) // Inject bucket name as config
     .WithEnvironment("Storage__PublicBaseUrl", awsStackOutputs.BucketWebsiteUrl); // Inject bucket URL as config
@@ -194,7 +194,7 @@ It's also important to note that `WithReference(awsStack)` will automatically in
 Just before building the host, we need to enable LocalStack integration:
 
 ```csharp
-// Enable LocalStack integration for all AWS resources
+// Enable LocalStack integration for all services which reference AWS resources
 builder.UseLocalStack(awsLocal);
 ```
 
@@ -326,7 +326,6 @@ public sealed class AwsStack : Amazon.CDK.Stack
             new BucketProps
             {
                 BucketName = "test-data-bucket",
-                AccessControl = BucketAccessControl.PRIVATE,
                 WebsiteIndexDocument = "index.html" // Enable static website hosting
             });
 
@@ -359,7 +358,7 @@ And now when we run the AppHost, Aspire will start LocalStack, deploy CDK stack 
 
 ![Aspire Dashboard with LocalStack](/assets/posts/aspire-localstack/dashboard.png)
 
-Now the AppHost is configured. It's time to set up the service itself to use the AWS SDK with LocalStack. First, add the necessary package reference to the service project file `Api.csproj`:
+Now the AppHost is configured. It's time to set up the service itself to use the AWS SDK with LocalStack. First, add the necessary package reference to the service: `LocalStack.Client`, `LocalStack.Client.Extensions`, `AWSSDK.S3`. In `Api.csproj` file, this looks like this:
 
 ```xml
 <PackageReference Include="AWSSDK.S3" />
@@ -415,9 +414,14 @@ app.MapPost("/upload", async (
     IOptions<StorageOptions> storageOptions) =>
 {
     var bucketName = storageOptions.Value.BucketName;
-    var key = file.FileName; // Use original filename as S3 key for simplicity (UNSAFE for production)
 
+    // Use original filename as S3 key for simplicity (UNSAFE for production)
+    var key = file.FileName;
+
+    // Open the input file stream
     await using var stream = file.OpenReadStream();
+
+    // Upload the file to S3
     await s3Client.PutObjectAsync(new PutObjectRequest
     {
         BucketName = bucketName,
@@ -430,7 +434,9 @@ app.MapPost("/upload", async (
     {
         Url = new Uri(storageOptions.Value.PublicBaseUrl, key)
     });
-}).DisableAntiforgery(); // Disable antiforgery for simplicity in this example
+})
+// Disable antiforgery for simplicity in this example
+.DisableAntiforgery();
 
 // Download endpoint
 app.MapGet("/download/{key}", async (
