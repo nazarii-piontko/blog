@@ -120,7 +120,7 @@ After that, we can start defining AWS infrastructure. We can define AWS infrastr
 var awsStack = builder.AddAWSCDKStack("aws-stack", s => new AwsStack(s))
     .WithReference(awsConfig); // Link to AWS configuration
 
-var awsStackOutputs = AwsStack.Outputs.Add(awsStack); // Get typed access to stack outputs
+var awsStackOutputs = AwsStackOutputs.Create(awsStack); // Get typed access to stack outputs
 ```
 
 `AwsStack` is a custom class where we define AWS resources. To define the actual infrastructure, here's how we can create an Amazon S3 bucket with website hosting:
@@ -153,24 +153,32 @@ public sealed class AwsStack : Amazon.CDK.Stack
         }));
     }
     
-    // The Outputs class provides type-safe access to stack resources.
-    // Instead of handling raw strings in Program.cs, this gives compile-time validation
-    // and prevents typos from becoming runtime errors.
-    public sealed class Outputs(IResourceBuilder<IStackResource> stack)
+}
+
+// The AwsStackOutputs class provides type-safe access to stack resources.
+// Instead of handling raw strings in Program.cs, this gives compile-time validation
+// and prevents typos from becoming runtime errors.
+public sealed class AwsStackOutputs
+{
+    private readonly IResourceBuilder<IStackResource<AwsStack>> _stack;
+
+    private AwsStackOutputs(IResourceBuilder<IStackResource<AwsStack>> stack)
     {
-        // Output reference for the bucket name
-        public StackOutputReference BucketName => stack.GetOutput(nameof(BucketName));
+        _stack = stack;
+    }
+        
+    // Output reference for the bucket name
+    public StackOutputReference BucketName => _stack.GetOutput(nameof(BucketName));
+    
+    // Output reference for the bucket website URL
+    public StackOutputReference BucketWebsiteUrl => _stack.GetOutput(nameof(BucketWebsiteUrl));
 
-        // Output reference for the bucket website URL
-        public StackOutputReference BucketWebsiteUrl => stack.GetOutput(nameof(BucketWebsiteUrl));
-
-        // Method to add outputs to the stack
-        public static Outputs Add(IResourceBuilder<IStackResource<AwsStack>> stack)
-        {
-            stack.AddOutput(nameof(BucketName), s => s.Bucket.BucketName);
-            stack.AddOutput(nameof(BucketWebsiteUrl), s => s.Bucket.BucketWebsiteUrl);
-            return new Outputs(stack);
-        }
+    // Factory method to create AwsStackOutputs and register outputs
+    public static AwsStackOutputs Create(IResourceBuilder<IStackResource<AwsStack>> stack)
+    {
+        stack.AddOutput(nameof(BucketName), s => s.Bucket.BucketName);
+        stack.AddOutput(nameof(BucketWebsiteUrl), s => s.Bucket.BucketWebsiteUrl);
+        return new AwsStackOutputs(stack);
     }
 }
 ```
@@ -291,14 +299,14 @@ var awsLocal = builder.AddLocalStack("aws-local",
     awsConfig: awsConfig,
     configureContainer: c =>
     {
-        c.Lifetime = ContainerLifetime.Persistent;
+        c.Lifetime = ContainerLifetime.Session;
         c.DebugLevel = 1;
         c.LogLevel = LocalStackLogLevel.Debug;
     });
 
 var awsStack = builder.AddAWSCDKStack("aws-stack", s => new AwsStack(s))
     .WithReference(awsConfig);
-var awsStackOutputs = AwsStack.Outputs.Add(awsStack);
+var awsStackOutputs = AwsStackOutputs.Create(awsStack);
 
 // Services
 
@@ -337,19 +345,26 @@ public sealed class AwsStack : Amazon.CDK.Stack
             Resources = [Bucket.ArnForObjects("*")]
         }));
     }
-    
-    public sealed class Outputs(IResourceBuilder<IStackResource> stack)
-    {
-        public StackOutputReference BucketName => stack.GetOutput(nameof(BucketName));
-    
-        public StackOutputReference BucketWebsiteUrl => stack.GetOutput(nameof(BucketWebsiteUrl));
+}
 
-        public static Outputs Add(IResourceBuilder<IStackResource<AwsStack>> stack)
-        {
-            stack.AddOutput(nameof(BucketName), s => s.Bucket.BucketName);
-            stack.AddOutput(nameof(BucketWebsiteUrl), s => s.Bucket.BucketWebsiteUrl);
-            return new Outputs(stack);
-        }
+public sealed class AwsStackOutputs
+{
+    private readonly IResourceBuilder<IStackResource<AwsStack>> _stack;
+
+    private AwsStackOutputs(IResourceBuilder<IStackResource<AwsStack>> stack)
+    {
+        _stack = stack;
+    }
+        
+    public StackOutputReference BucketName => _stack.GetOutput(nameof(BucketName));
+    
+    public StackOutputReference BucketWebsiteUrl => _stack.GetOutput(nameof(BucketWebsiteUrl));
+
+    public static AwsStackOutputs Create(IResourceBuilder<IStackResource<AwsStack>> stack)
+    {
+        stack.AddOutput(nameof(BucketName), s => s.Bucket.BucketName);
+        stack.AddOutput(nameof(BucketWebsiteUrl), s => s.Bucket.BucketWebsiteUrl);
+        return new AwsStackOutputs(stack);
     }
 }
 ```
