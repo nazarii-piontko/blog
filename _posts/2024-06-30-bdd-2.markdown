@@ -8,6 +8,8 @@ date:      "2024-06-30"
 toc:       true
 toc_label: "Table of Contents"
 toc_icon:  "cog"
+header:
+ teaser: /assets/posts/bdd/logo.png
 ---
 
 # Introduction

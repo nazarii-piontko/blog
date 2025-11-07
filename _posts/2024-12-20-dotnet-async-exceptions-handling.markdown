@@ -6,6 +6,8 @@ excerpt:   "C# async exception handling exhibits different behaviors based on me
 tags:      "dotnet csharp async exceptions"
 date:      "2024-12-20"
 toc:       false
+header:
+ teaser: /assets/posts/dotnet-async-exceptions-handling/logo.png
 ---
 
 A colleague recently asked me about C# exception handling behavior with async/await keywords and TPL. His question was straightforward - which exception-throwing scenarios would crash the process? Here's a sample code that demonstrates different scenarios.

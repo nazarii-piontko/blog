@@ -5,6 +5,8 @@ title:     "Rounding Numbers: There's More Than One Right Answer"
 excerpt:   "Programming languages often use banker's rounding - rounding to the nearest even digit - which means 1.25 becomes 1.2 while 1.35 becomes 1.4, contradicting the familiar rule of always rounding 5 up"
 tags:      "math"
 date:      "2025-01-02"
+header:
+ teaser: /assets/posts/math-round/logo.png
 ---
 
 Default number rounding rules can differ across programming languages, and almost nobody notices until it's too late. The problem isn't that the implementations are wrong—it's that they're doing something completely different from what developers expect.

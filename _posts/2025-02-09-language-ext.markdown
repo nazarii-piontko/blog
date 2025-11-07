@@ -5,6 +5,8 @@ title:     "Practical Functional Programming in C#: Using Option and Result Patt
 excerpt:   "Discover how to leverage functional programming patterns in C# to write more maintainable and error-resistant code. Learn practical applications of Option and Result types using Language.Ext, moving beyond null checks and exception handling to create more explicit and safer code without sacrificing readability."
 tags:      "dotnet csharp"
 date:      "2025-02-09"
+header:
+ teaser: /assets/posts/language-ext/logo.png
 ---
 
 # Introduction

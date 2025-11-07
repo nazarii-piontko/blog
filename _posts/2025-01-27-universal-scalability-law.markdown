@@ -5,6 +5,8 @@ title:     "Universal Scalability Law"
 excerpt:   "Ever wonder why doubling database server's CPU cores doesn't double performance? Through real-world AWS RDS benchmarks, we'll explore the Universal Scalability Law and learn why throwing more hardware at performance problems isn't always the answer. Tests with RDS instances revealed some surprising patterns that might change how you approach your next capacity planning meeting."
 tags:      "capacity-planning"
 date:      "2025-01-27"
+header:
+ teaser: /assets/posts/capacity-planning/usl/logo.png
 ---
 
 Have you ever added more vCPU to the cloud database or service instance expecting a nice performance boost, only to see disappointing results? Think about the last time you scaled 2x or 4x expecting corresponding improvement?  While it seems logical that doubling vCPU should double performance, real systems rarely work exact that way. There's actually fascinating math behind this common frustration.
