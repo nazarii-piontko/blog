@@ -1,0 +1,10 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Run Jekyll",
+            "type": "shell",
+            "command": "docker run -it -v $(pwd):/blog -w /blog --network host --rm jekyll build --watch"
+        }
+    ]
+}
