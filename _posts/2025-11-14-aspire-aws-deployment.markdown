@@ -3,7 +3,7 @@ layout: single
 classes: wide
 title: Deploying .NET Aspire to AWS
 excerpt: Deploy .NET Aspire applications to AWS without maintaining separate infrastructure code. One C# project switches between local emulation and production. Aspire handles orchestration, AWS CDK handles provisioning.
-tags: dotnet, aspire, aws, cdk
+tags: dotnet aspire aws cdk
 date: 2025-11-14
 toc: false
 header:

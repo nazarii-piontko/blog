@@ -3,7 +3,7 @@ layout: single
 classes: wide
 title: Configuring .NET Aspire with AWS and LocalStack
 excerpt: Stop paying for AWS services during development or fighting over shared dev environments. Here's how to use LocalStack with .NET Aspire to develop against AWS services locally, with automatic configuration injection that makes the same code work in development and production.
-tags: dotnet, aspire, aws, localstack
+tags: dotnet aspire aws localstack
 date: 2025-11-03
 toc: false
 header:
