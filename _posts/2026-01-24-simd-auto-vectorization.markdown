@@ -167,7 +167,7 @@ The benchmark results speak for themselves: **the vectorized version is approxim
 
 Benchmark Results produced with [`picobench`](https://github.com/iboB/picobench):
 
-```bash
+```
 Name (* = baseline)       |   Dim   |  Total ms |  ns/op  |Baseline| Ops/second
 --------------------------|--------:|----------:|--------:|-------:|----------:
  bench_bitpack_naive *    |       8 |     0.003 |     379 |      - |  2632444.9
@@ -183,8 +183,6 @@ Name (* = baseline)       |   Dim   |  Total ms |  ns/op  |Baseline| Ops/second
 ```
 
 This example demonstrates a counterintuitive principle in performance optimization: the way we access our data matters more than we might think. By restructuring array accesses to align with how SIMD instructions operate, we can help the compiler generate dramatically more efficient code - even when the change seems to make the algorithm "worse" from a traditional optimization perspective.
-
----
 
 ## Bonus: The Same Principle in C#
 
@@ -264,7 +262,7 @@ The notable differences from C++ is explicit intrinsics. While the C++ compiler 
 
 Benchmarking with `BenchmarkDotNet`:
 
-```bash
+```
 | Method | Mean     | Error    | StdDev   | Median   | Ratio | RatioSD |
 |------- |---------:|---------:|---------:|---------:|------:|--------:|
 | Naive  | 759.0 ns | 15.15 ns | 37.43 ns | 746.0 ns |  1.00 |    0.07 |
