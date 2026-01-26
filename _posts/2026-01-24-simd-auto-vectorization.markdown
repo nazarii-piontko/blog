@@ -140,19 +140,19 @@ To visualize the difference:
 
 * Naive approach - reads consecutive elements, requires shuffling:
   ```
-  Iteration i=0,1: read [0,8] [1,9] [2,10]... [7,15] → shuffle → pack → → output[0,1]
-  Iteration i=2,3: read [16,24] [17,25] [18,26]... [23,31] → shuffle → pack → → output[2,3]
+  Iteration i=0,1: read [0,8] [1,9] [2,10]... [7,15] → shuffle → pack → output[0,1]
+  Iteration i=2,3: read [16,24] [17,25] [18,26]... [23,31] → shuffle → pack → output[2,3]
   ...
-  Iteration i=126,127: read [1008,1016] [1009,1017]... [1015,1023] → shuffle → pack → → output[126,127]
+  Iteration i=126,127: read [1008,1016] [1009,1017]... [1015,1023] → shuffle → pack → output[126,127]
   ```
   Problem: To vectorize, must load `[0]` and `[8]` together, `[1]` and `[9]` together, etc. Requires `punpcklqdq` to interleave non-adjacent values.
 
 * Vectorized approach - reads strided elements, naturally aligned. Input conceptually divided into 8 slices of 128 elements:
   ```
-  Iteration i=0,1: read [0,1] [128,129] [256,257]... [896,897] → pack → → output[0,1]
-  Iteration i=2,3: read [2,3] [130,131] [258,259]... [898,899] → pack → → output[2,3]
+  Iteration i=0,1: read [0,1] [128,129] [256,257]... [896,897] → pack → output[0,1]
+  Iteration i=2,3: read [2,3] [130,131] [258,259]... [898,899] → pack → output[2,3]
   ...
-  Iteration i=126,127: read [126,127] [254,255]... [1022,1023] → pack → → output[126,127]
+  Iteration i=126,127: read [126,127] [254,255]... [1022,1023] → pack → output[126,127]
   ```
   Advantage: Loading `[0,1]` or `[128,129]` is a single [`movdqu`](https://www.felixcloutier.com/x86/movdqu:vmovdqu8:vmovdqu16:vmovdqu32:vmovdqu64) instruction. Values naturally align to SIMD lanes - no shuffling needed.
 
