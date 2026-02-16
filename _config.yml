@@ -77,7 +77,7 @@ comments:
     repo_id: "R_kgDOK0yjEg"
     category_name: "General"
     category_id: "DIC_kwDOK0yjEs4C2lS8"
-    discussion_term: "pathname"
+    discussion_term: "title"
     strict: "0"
     reactions_enabled: "1"
     emit_metadata: "0"
