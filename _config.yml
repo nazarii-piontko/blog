@@ -29,6 +29,7 @@ author:
       url: "https://medium.com/@npiontko"
 
 github_username: nazarii-piontko
+repository: "nazarii-piontko/blog"
 twitter:
   username: '@elheap42'
 
@@ -70,10 +71,20 @@ footer:
       icon: "fab fa-fw fa-medium"
       url: "https://medium.com/@npiontko"
 
-# comments:
-#   provider: disqus
-#   disqus:
-#     shortname: np-blog-1
+comments:
+  provider: giscus
+  giscus:
+    repo_id: "R_kgDOK0yjEg"
+    category_name: "General"
+    category_id: "DIC_kwDOK0yjEs4C2lS8"
+    discussion_term: "pathname"
+    strict: "0"
+    reactions_enabled: "1"
+    emit_metadata: "0"
+    input_position: "top"
+    theme: "dark_dimmed"
+    lang: "en"
+    lazy: true
 
 exclude:
   - Dockerfile
