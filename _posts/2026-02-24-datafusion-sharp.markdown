@@ -16,6 +16,8 @@ The options in the .NET ecosystem have historically been limited. You could use 
 
 That gap is what motivated me to build **DataFusionSharp**.
 
+![DataFusionSharp logo](/assets/posts/datafusion-sharp/logo-wide.png)
+
 ## What Is Apache DataFusion?
 
 [Apache DataFusion](https://datafusion.apache.org/) is a query engine written in Rust, built on top of [Apache Arrow](https://arrow.apache.org/). It's designed for high-performance analytical workloads: think scanning large files, aggregating millions of rows, joining multiple tables — all processed in-process without a server.
