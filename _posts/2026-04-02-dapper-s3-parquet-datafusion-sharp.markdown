@@ -137,7 +137,7 @@ var topUtilities = await connection.QueryAsync<UtilityCapacity>("""
         JOIN utilities u
             ON p.utility_id_eia = u.utility_id_eia
             AND p.report_date = u.report_date
-    WHERE g.report_date = '2023-01-01'
+    WHERE g.report_date = '2026-01-01'
         AND g.operational_status = 'existing'
     GROUP BY u.utility_name_eia, u.state
     ORDER BY TotalCapacityMw DESC
@@ -148,7 +148,7 @@ foreach (var utility in topUtilities)
     Console.WriteLine($"{utility.UtilityName} ({utility.State}): {utility.TotalCapacityMw:N1} MW across {utility.PlantCount} plants");
 ```
 
-This is standard Dapper — `QueryAsync<T>` with a SQL string. The SQL runs inside DataFusion's query engine, reading Parquet data from S3 on the fly. Dapper sees a `DbDataReader` and maps columns to record properties by name. The query joins across three files totaling 16 MB, filters to currently operating generators as of the 2023 reporting year, aggregates by utility, and returns the top 15.
+This is standard Dapper — `QueryAsync<T>` with a SQL string. The SQL runs inside DataFusion's query engine, reading Parquet data from S3 on the fly. Dapper sees a `DbDataReader` and maps columns to record properties by name. The query joins across three files totaling 16 MB, filters to currently operating generators as of the 2026 reporting year, aggregates by utility, and returns the top 15.
 
 ### What does the energy mix look like?
 
@@ -166,7 +166,7 @@ var energyMix = await connection.QueryAsync<StateEnergyMix>("""
         JOIN plants p
             ON g.plant_id_eia = p.plant_id_eia
             AND g.report_date = p.report_date
-    WHERE g.report_date = '2023-01-01'
+    WHERE g.report_date = '2026-01-01'
         AND g.operational_status = 'existing'
         AND p.state IS NOT NULL
     GROUP BY p.state, g.fuel_type_code_pudl
@@ -202,7 +202,7 @@ var largestGenerators = await connection.QueryAsync<TopGenerator>("""
         JOIN utilities u
             ON p.utility_id_eia = u.utility_id_eia
             AND p.report_date = u.report_date
-    WHERE g.report_date = '2023-01-01'
+    WHERE g.report_date = '2026-01-01'
         AND g.operational_status = 'existing'
         AND g.capacity_mw IS NOT NULL
     ORDER BY g.capacity_mw DESC
@@ -238,7 +238,7 @@ var texasPlants = await connection.QueryAsync<TopGenerator>("""
         JOIN utilities u
             ON p.utility_id_eia = u.utility_id_eia
             AND p.report_date = u.report_date
-    WHERE g.report_date = '2023-01-01'
+    WHERE g.report_date = '2026-01-01'
         AND g.operational_status = 'existing'
         AND p.state = @state
         AND g.capacity_mw >= @minCapacityMw
@@ -262,7 +262,7 @@ var totalCapacity = await connection.ExecuteScalarAsync<double>("""
         JOIN plants p
             ON g.plant_id_eia = p.plant_id_eia
             AND g.report_date = p.report_date
-    WHERE g.report_date = '2023-01-01'
+    WHERE g.report_date = '2026-01-01'
         AND g.operational_status = 'existing'
         AND p.state = @state
     """,
