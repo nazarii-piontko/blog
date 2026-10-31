@@ -1,4 +1,4 @@
-FROM ruby:3.4-bullseye
+FROM ruby:4.0-bookworm
 
 ENV JEKYLL_ENV=production
 
